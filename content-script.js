@@ -11,11 +11,11 @@ chrome.storage.sync.get(['grdTogl'], function(result){
         setGrade();
     }
 });
-chrome.storage.sync.get(['tabTogl'], function(result){
-    if (result.tabTogl == true)  {
-        // setTabs();
-    }
-});
+// chrome.storage.sync.get(['tabTogl'], function(result){
+//     if (result.tabTogl == true)  {
+//         setTabs();
+//     }
+// });
 chrome.storage.sync.get(['asgmtBckBtnTogl'], function(result){
     if (result.asgmtBckBtnTogl == true)  {
         setAsgmtBckBtn();
@@ -26,39 +26,39 @@ chrome.storage.sync.get(['asgmtBckBtnTogl'], function(result){
 document.getElementById("global_nav_conversations_link").children[1].innerHTML = "Email";
 var id = window.location.href;
 
-function setTabs()  {
-    if (id.includes("https://hcpss.instructure.com/courses")) {
-        var idStr = id[38] + id[39] + id[40] + id[41] + id[42] + id[43];
-        console.log(window.location.href);
-        if (document.getElementById("wrapper").getElementsByClassName("ic-app-nav-toggle-and-crumbs") && document.getElementById("wrapper").getElementsByClassName("no-print"))  {
-            var wrp = document.getElementById('wrapper').firstElementChild;
-        } else  {
-            var wrp = document.getElementById('wrapper');
-        }
-        var btn = document.createElement('BUTTON');
-        btn.type = "button";
-        btn.id = 'courseMenuToggle';
-        btn.setAttribute("class", "Button Button--link ic-app-course-nav-toggle");
-        btn.setAttribute("aria-live", "polite");
-        btn.setAttribute("aria-label", "Hide Courses Navigation Menu");
-        document.body.classList.add("course-menu-expanded");
-        btn.innerHTML += "<i class='icon-hamburger'></i>";
-        if (document.getElementById("back_to_subject") != null)  {
-            document.getElementById("back_to_subject").classList.add("hidden");
-            wrp.insertBefore(btn, wrp.childNodes[0]);
-        }
-        var crsmnu = document.createElement('DIV');
-        crsmnu.id = 'left-side';
-        crsmnu.setAttribute("class", "ic-app-course-menu ic-sticky-on list-view");
-        crsmnu.setAttribute("style", "display: block; overflow: visible");
-        crsmnu.innerHTML = "<div class='ic-sticky-frame'><span id='section-tabs-header-subtitle' class='ellipsis'>NE</span><nav role='navigation' aria-label='Courses Navigation Menu'><ul id='section-tabs'><li class='section'><a href='/courses/" + idStr + "' class='home' tabindex='0'>Home</a></li><li class='section'><a href='/courses/" + idStr + "/announcements' class='announcements' tabindex='0'>Announcements</a></li><li class='section'><a href='/courses/" + idStr + "/modules' class='modules' tabindex='0'>Modules</a></li><li class='section'><a href='/courses/" + idStr + "/assignments' class='assignments' tabindex='0'>Assignments</a></li><li class='section'><a href='/courses/" + idStr + "/grades' class='grades' tabindex='0'>Grades</a></li><li class='section'><a href='/courses/" + idStr + "/discussion_topics' class='discussions' tabindex='0'>Discussions</a></li><li class='section'><a href='/courses/" + idStr + "/assignments/syllabus' class='syllabus' tabindex='0'>Syllabus</a></li><li class='section'><a href='/courses/" + idStr + "/files' class='files' tabindex='0'>Files</a></li><li class='section'><a href='/courses/" + idStr + "/users' class='users' tabindex='0'>Users</a></li><li class='section'><a href='/courses/" + idStr + "/external_tools/38920' class='context_external_tool_38920' tabindex='0'>Google Drive</a></li><li class='section'><a href='/courses/" + idStr + "/external_tools/119166' class='context_external_tool_119166' tabindex='0'>HCPSS.me</a></li></ul></nav></div>";
-        document.getElementById('main').insertBefore(crsmnu, document.getElementById('main').childNodes[0]);
-        if (document.getElementById('k5-course-header-hero') != null)  {
-            document.getElementById('k5-course-header-hero').style.height = "50px";
-        }
+// function setTabs()  {
+//     if (id.includes("https://hcpss.instructure.com/courses")) {
+//         var idStr = id[38] + id[39] + id[40] + id[41] + id[42] + id[43];
+//         console.log(window.location.href);
+//         if (document.getElementById("wrapper").getElementsByClassName("ic-app-nav-toggle-and-crumbs") && document.getElementById("wrapper").getElementsByClassName("no-print"))  {
+//             var wrp = document.getElementById('wrapper').firstElementChild;
+//         } else  {
+//             var wrp = document.getElementById('wrapper');
+//         }
+//         var btn = document.createElement('BUTTON');
+//         btn.type = "button";
+//         btn.id = 'courseMenuToggle';
+//         btn.setAttribute("class", "Button Button--link ic-app-course-nav-toggle");
+//         btn.setAttribute("aria-live", "polite");
+//         btn.setAttribute("aria-label", "Hide Courses Navigation Menu");
+//         document.body.classList.add("course-menu-expanded");
+//         btn.innerHTML += "<i class='icon-hamburger'></i>";
+//         if (document.getElementById("back_to_subject") != null)  {
+//             document.getElementById("back_to_subject").classList.add("hidden");
+//             wrp.insertBefore(btn, wrp.childNodes[0]);
+//         }
+//         var crsmnu = document.createElement('DIV');
+//         crsmnu.id = 'left-side';
+//         crsmnu.setAttribute("class", "ic-app-course-menu ic-sticky-on list-view");
+//         crsmnu.setAttribute("style", "display: block; overflow: visible");
+//         crsmnu.innerHTML = "<div class='ic-sticky-frame'><span id='section-tabs-header-subtitle' class='ellipsis'>NE</span><nav role='navigation' aria-label='Courses Navigation Menu'><ul id='section-tabs'><li class='section'><a href='/courses/" + idStr + "' class='home' tabindex='0'>Home</a></li><li class='section'><a href='/courses/" + idStr + "/announcements' class='announcements' tabindex='0'>Announcements</a></li><li class='section'><a href='/courses/" + idStr + "/modules' class='modules' tabindex='0'>Modules</a></li><li class='section'><a href='/courses/" + idStr + "/assignments' class='assignments' tabindex='0'>Assignments</a></li><li class='section'><a href='/courses/" + idStr + "/grades' class='grades' tabindex='0'>Grades</a></li><li class='section'><a href='/courses/" + idStr + "/discussion_topics' class='discussions' tabindex='0'>Discussions</a></li><li class='section'><a href='/courses/" + idStr + "/assignments/syllabus' class='syllabus' tabindex='0'>Syllabus</a></li><li class='section'><a href='/courses/" + idStr + "/files' class='files' tabindex='0'>Files</a></li><li class='section'><a href='/courses/" + idStr + "/users' class='users' tabindex='0'>Users</a></li><li class='section'><a href='/courses/" + idStr + "/external_tools/38920' class='context_external_tool_38920' tabindex='0'>Google Drive</a></li><li class='section'><a href='/courses/" + idStr + "/external_tools/119166' class='context_external_tool_119166' tabindex='0'>HCPSS.me</a></li></ul></nav></div>";
+//         document.getElementById('main').insertBefore(crsmnu, document.getElementById('main').childNodes[0]);
+//         if (document.getElementById('k5-course-header-hero') != null)  {
+//             document.getElementById('k5-course-header-hero').style.height = "50px";
+//         }
         
-    }
-};
+//     }
+// };
 
 function setGrade()  {
     if (id == "https://hcpss.instructure.com" || id == "https://hcpss.instructure.com/" || id == "https://hcpss.instructure.com/#homeroom")  {
