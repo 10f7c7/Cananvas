@@ -15,20 +15,20 @@ chrome.storage.sync.get(['grdTogl'], function(result){
 });
 document.getElementById("grdTogl").addEventListener("click", toggleGrade);
 
-// tab toggle
-chrome.storage.sync.get(['tabTogl'], function(result){
-  console.log(result.tabTogl);
-  if(result.tabTogl == true)  {
-    document.getElementById("tabTogl").setAttribute("checked", '');
-    document.getElementById("tabTogl").value = true;
-    // document.getElementById("tabTogl").innerHTML = "Tabs Toggle : ON";
-  } else if (result.tabTogl == false)  {
-    document.getElementById("tabTogl").removeAttribute("checked");
-    document.getElementById("tabTogl").value = false;
-    // document.getElementById("tabTogl").innerHTML = "Tabs Toggle : OFF";
-  }
-});
-document.getElementById("tabTogl").addEventListener("click", toggleTabs);
+// // tab toggle
+// chrome.storage.sync.get(['tabTogl'], function(result){
+//   console.log(result.tabTogl);
+//   if(result.tabTogl == true)  {
+//     document.getElementById("tabTogl").setAttribute("checked", '');
+//     document.getElementById("tabTogl").value = true;
+//     // document.getElementById("tabTogl").innerHTML = "Tabs Toggle : ON";
+//   } else if (result.tabTogl == false)  {
+//     document.getElementById("tabTogl").removeAttribute("checked");
+//     document.getElementById("tabTogl").value = false;
+//     // document.getElementById("tabTogl").innerHTML = "Tabs Toggle : OFF";
+//   }
+// });
+// document.getElementById("tabTogl").addEventListener("click", toggleTabs);
 
 // Assignment Back Button toggle
 chrome.storage.sync.get(['asgmtBckBtnTogl'], function(result){
@@ -48,9 +48,9 @@ document.getElementById("asgmtBckBtnTogl").addEventListener("click", toggleAssig
 if (document.getElementById("grdTogl").hasAttribute("checked") == false)  {
   chrome.storage.sync.set({grdTogl : true});
 }
-if (document.getElementById("tabTogl").hasAttribute("checked") == false)  {
-  chrome.storage.sync.set({tabTogl : true});
-}
+// if (document.getElementById("tabTogl").hasAttribute("checked") == false)  {
+//   chrome.storage.sync.set({tabTogl : true});
+// }
 if (document.getElementById("asgmtBckBtnTogl").hasAttribute("checked") == false)  {
   chrome.storage.sync.set({asgmtBckBtnTogl : true});
 }
@@ -69,19 +69,19 @@ function toggleGrade()  {
   }
 }
 
-function toggleTabs()  {
-  if (document.getElementById("tabTogl").value == "true")  {
-    chrome.storage.sync.set({tabTogl : false})
-    document.getElementById("tabTogl").innerHTML = "Tabs Toggle : OFF";
-    document.getElementById("tabTogl").removeAttribute("checked");
-    document.getElementById("tabTogl").value = "false";
-  } else if (document.getElementById("tabTogl").value == "false")  {
-    chrome.storage.sync.set({tabTogl : true})
-    document.getElementById("tabTogl").innerHTML = "Tabs Toggle : ON";
-    document.getElementById("tabTogl").setAttribute("checked", '');
-    document.getElementById("tabTogl").value = "true";
-  }
-}
+// function toggleTabs()  {
+//   if (document.getElementById("tabTogl").value == "true")  {
+//     chrome.storage.sync.set({tabTogl : false})
+//     document.getElementById("tabTogl").innerHTML = "Tabs Toggle : OFF";
+//     document.getElementById("tabTogl").removeAttribute("checked");
+//     document.getElementById("tabTogl").value = "false";
+//   } else if (document.getElementById("tabTogl").value == "false")  {
+//     chrome.storage.sync.set({tabTogl : true})
+//     document.getElementById("tabTogl").innerHTML = "Tabs Toggle : ON";
+//     document.getElementById("tabTogl").setAttribute("checked", '');
+//     document.getElementById("tabTogl").value = "true";
+//   }
+// }
 
 function toggleAssignmentBtn()  {
   if (document.getElementById("asgmtBckBtnTogl").value == "true")  {
