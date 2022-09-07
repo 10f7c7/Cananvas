@@ -68,9 +68,6 @@ function setGrade()  {
         observer.observe(document.getElementById("DashboardCard_Container"), { childList: true, subtree: true });
         function addGrade()  {
             observer.disconnect();
-            // for (let i = 0; i < menuBtn.length; i++) {
-            //     menuBtn[i].style.transform = "translate(0px, 15px)";
-            // }
             for (var i = 0; i < courseCard.length; i++) {
                 var crsnm = courseCard[i].children[0].children[2].href;
                 var crsnmstr = crsnm[38] + crsnm[39] + crsnm[40] + crsnm[41] + crsnm[42] + crsnm[43];
