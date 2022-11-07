@@ -1,5 +1,9 @@
 //changePage();
 
+
+
+
+
 /* chrome.runtime.sendMessage('get-grade-options', (response) => {
     if (response === true)  {
         setGrade();
@@ -26,6 +30,8 @@ chrome.storage.sync.get(['asgmtBckBtnTogl'], function(result){
 document.getElementById("global_nav_conversations_link").children[1].innerHTML = "Email";
 var id = window.location.href;
 
+
+//https://hcpss.instructure.com/api/v1/courses/189271/tabs
 // function setTabs()  {
 //     if (id.includes("https://hcpss.instructure.com/courses")) {
 //         var idStr = id[38] + id[39] + id[40] + id[41] + id[42] + id[43];
@@ -72,7 +78,7 @@ function setGrade()  {
                 var crsnm = courseCard[i].children[0].children[2].href;
                 var crsnmstr = crsnm[38] + crsnm[39] + crsnm[40] + crsnm[41] + crsnm[42] + crsnm[43];
                 var div = document.createElement('DIV');
-                div.setAttribute("style", "background-color: white; height: 20px; padding-right: 5px; padding-left: 5px; margin-top: 10px; margin-right: 10px; margin-left: 10px; float: left; border-radius: 10px; text-align: center;");
+                div.setAttribute("style", "z-index: 10; position: absolute; background-color: white; height: 22px; padding-right: 5px; padding-left: 5px; margin-top: 10px; margin-right: 10px; margin-left: 10px; float: left; border-radius: 10px; text-align: center;");
                 div.innerHTML = "N/A";
                 div.setAttribute("onclick", "window.open('https://hcpss.instructure.com/courses/" + crsnmstr + "/grades'); event.stopPropagation()");
                 courseCard[i].children[0].insertBefore(div, courseCard[i].children[0].children[0]);
