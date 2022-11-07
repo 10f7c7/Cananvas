@@ -34,18 +34,19 @@ chrome.storage.sync.get(['asgmtBckBtnTogl'], function(result){
 document.getElementById("asgmtBckBtnTogl").addEventListener("click", toggleAssignmentBtn);
 
 
-// ----------------------------------------------------------------------------------------------------
-// I forgor what this does
-// if (document.getElementById("grdTogl").hasAttribute("checked") == false)  {
-//   chrome.storage.sync.set({grdTogl : true});
-// }
-// // if (document.getElementById("tabTogl").hasAttribute("checked") == false)  {
-// //   chrome.storage.sync.set({tabTogl : true});
-// // }
-// if (document.getElementById("asgmtBckBtnTogl").hasAttribute("checked") == false)  {
-//   chrome.storage.sync.set({asgmtBckBtnTogl : true});
-// }
-// ----------------------------------------------------------------------------------------------------
+// Better TODO toggle
+chrome.storage.sync.get(['betterTODOTogl'], function(result){
+  console.log(result.betterTODOTogl);
+  if(result.betterTODOTogl == true)  {
+    document.getElementById("betterTODOTogl").setAttribute("checked", '');
+  } else if (result.betterTODOTogl == false)  {
+    document.getElementById("betterTODOTogl").removeAttribute("checked");
+  }
+});
+document.getElementById("betterTODOTogl").addEventListener("click", toggleBetterTODO);
+
+
+// -----------------------------------------------------------------------------------------------------------
 
 
 // toggleGrade function
@@ -62,12 +63,12 @@ function toggleGrade()  {
 
 // toggleTabs Function
 // function toggleTabs()  {
-//   if (document.getElementById("tabTogl").hasAttribute("checked") == true)  {
-//     chrome.storage.sync.set({tabTogl : false})
-//     document.getElementById("tabTogl").removeAttribute("checked"
-//   } else if (document.getElementById("tabTogl").hasAttribute("checked") == false)  {
-//     chrome.storage.sync.set({tabTogl : true})
-//     document.getElementById("tabTogl").setAttribute("checked", ''
+  //   if (document.getElementById("tabTogl").hasAttribute("checked") == true)  {
+    //     chrome.storage.sync.set({tabTogl : false})
+    //     document.getElementById("tabTogl").removeAttribute("checked"
+    //   } else if (document.getElementById("tabTogl").hasAttribute("checked") == false)  {
+      //     chrome.storage.sync.set({tabTogl : true})
+      //     document.getElementById("tabTogl").setAttribute("checked", ''
 //   }
 // }
 
@@ -83,10 +84,34 @@ function toggleAssignmentBtn()  {
   }
 }
 
+
+// toggleBetterTODO function
+function toggleBetterTODO()  {
+  if (document.getElementById("betterTODOTogl").hasAttribute("checked") == true)  {
+    chrome.storage.sync.set({betterTODOTogl : false})
+    document.getElementById("betterTODOTogl").removeAttribute("checked");
+  } else if (document.getElementById("betterTODOTogl").hasAttribute("checked") == false)  {
+    chrome.storage.sync.set({betterTODOTogl : true})
+    document.getElementById("betterTODOTogl").setAttribute("checked", '');
+  }
+}
+
 // -------------------------------------------------------------------------------
 // UNUSED
 // -------------------------------------------------------------------------------
 
+// ----------------------------------------------------------------------------------------------------
+// I forgor what this does
+// if (document.getElementById("grdTogl").hasAttribute("checked") == false)  {
+//   chrome.storage.sync.set({grdTogl : true});
+// }
+// // if (document.getElementById("tabTogl").hasAttribute("checked") == false)  {
+// //   chrome.storage.sync.set({tabTogl : true});
+// // }
+// if (document.getElementById("asgmtBckBtnTogl").hasAttribute("checked") == false)  {
+//   chrome.storage.sync.set({asgmtBckBtnTogl : true});
+// }
+// ----------------------------------------------------------------------------------------------------
 
 
 

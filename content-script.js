@@ -24,6 +24,13 @@ chrome.storage.sync.get(['asgmtBckBtnTogl'], function(result){
 });
 
 
+chrome.storage.sync.get(['betterTODOTogl'], function(result){
+    if (result.betterTODOTogl == true)  {
+        setBetterTODO();
+    }
+});
+
+
 document.getElementById("global_nav_conversations_link").children[1].innerHTML = "Email";
 var id = window.location.href;
 
@@ -151,4 +158,8 @@ function setAsgmtBckBtn()  {
         bckbtn.href = id.substring(0, 64);
         document.getElementsByClassName("ic-Action-header__Primary")[0].appendChild(bckbtn);
     }
+}
+
+function setBetterTODO()  {
+    console.log("test");
 }
