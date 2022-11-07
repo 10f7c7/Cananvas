@@ -1,9 +1,6 @@
 //changePage();
 
 
-
-
-
 /* chrome.runtime.sendMessage('get-grade-options', (response) => {
     if (response === true)  {
         setGrade();
