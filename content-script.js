@@ -95,7 +95,7 @@ function setGrade()  {
                     $.ajax({url: `https://hcpss.instructure.com/api/v1/courses/${crsnmstr}/grading_periods`, method: "GET", async: false}).done(function(response){
                         var quart = response.grading_periods;
                         // console.log("quart" + quart);
-
+    
                         var date = new Date();
                         var time = date.toISOString();
                         var timeFormated = time.slice(0,10);
@@ -193,7 +193,7 @@ function setBetterTODO()  {
             var todoButton = document.createElement('button');
             todoButton.style.float = "right";
             todoButton.type = 'button';
-            todoButton.value = 'true';
+            todoButton.value = 'false';
             todoButton.onclick = toggleTODO;
             todoButton.innerText = `Toggle TODOS: ${todoButton.value}`;
             var listItem = [];
@@ -203,22 +203,22 @@ function setBetterTODO()  {
             
             
             
-            
+        var data = [];
             await fetch('https://hcpss.instructure.com/api/v1/users/self/todo', {method:"GET"})
             .then((response) => response.json())
-            .then((data) => {
-                // console.log(data.length);
+            .then((dat1a) => {
+                data = dat1a;
+                // console.log(data);
                 // data[0]
                 listContainer.setAttribute('class', 'fOyUs_bGBk fOyUs_UeJS fClCc_bGBk fClCc_fLbg');
                 listContainer.setAttribute('display', 'none');
-
                 document.querySelector("div[data-testid='ToDoSidebar']").appendChild(listContainer);
 
                 for (var i = 0; i < data.length; i++) {
                     var listItemtmp = document.createElement('li');
                     listItemtmp.setAttribute('class', 'fOyUs_bGBk jpyTq_bGBk jpyTq_ycrn');
                     listItemtmp.setAttribute('style', 'padding: 0px; max-width: 100%;');
-                    listItemtmp.innerHTML = `<li class='fOyUs_bGBk jpyTq_bGBk jpyTq_ycrn' style='padding: 0px; max-width: 100%;'><div class='ToDoSidebarItem'><svg label='Assignment' name='IconAssignment' viewBox='0 0 1920 1920' rotate='0' width='1em' height='1em' aria-hidden='true' role='presentation' focusable='false' class='dUOHu_bGBk dUOHu_drOs dUOHu_eXrk cGqzL_bGBk cGqzL_owrh ToDoSidebarItem__Icon' style='width: 1em; height: 1em;'><g role='presentation'><path d='M1468.2137,0 L1468.2137,564.697578 L1355.27419,564.697578 L1355.27419,112.939516 L112.939516,112.939516 L112.939516,1807.03225 L1355.27419,1807.03225 L1355.27419,1581.15322 L1468.2137,1581.15322 L1468.2137,1919.97177 L2.5243549e-29,1919.97177 L2.5243549e-29,0 L1468.2137,0 Z M1597.64239,581.310981 C1619.77853,559.174836 1655.46742,559.174836 1677.60356,581.310981 L1677.60356,581.310981 L1903.4826,807.190012 C1925.5058,829.213217 1925.5058,864.902104 1903.4826,887.038249 L1903.4826,887.038249 L1225.8455,1564.67534 C1215.22919,1575.17872 1200.88587,1581.16451 1185.86491,1581.16451 L1185.86491,1581.16451 L959.985883,1581.16451 C928.814576,1581.16451 903.516125,1555.86606 903.516125,1524.69475 L903.516125,1524.69475 L903.516125,1298.81572 C903.516125,1283.79477 909.501919,1269.45145 920.005294,1258.94807 L920.005294,1258.94807 Z M1442.35055,896.29929 L1016.45564,1322.1942 L1016.45564,1468.225 L1162.48643,1468.225 L1588.38135,1042.33008 L1442.35055,896.29929 Z M677.637094,1242.34597 L677.637094,1355.28548 L338.818547,1355.28548 L338.818547,1242.34597 L677.637094,1242.34597 Z M903.516125,1016.46693 L903.516125,1129.40645 L338.818547,1129.40645 L338.818547,1016.46693 L903.516125,1016.46693 Z M1637.62298,701.026867 L1522.19879,816.451052 L1668.22958,962.481846 L1783.65377,847.057661 L1637.62298,701.026867 Z M1129.39516,338.829841 L1129.39516,790.587903 L338.818547,790.587903 L338.818547,338.829841 L1129.39516,338.829841 Z M1016.45564,451.769356 L451.758062,451.769356 L451.758062,677.648388 L1016.45564,677.648388 L1016.45564,451.769356 Z' fill-rule='evenodd' stroke='none' stroke-width='1'></path></g></svg><div class='ToDoSidebarItem__Info'><div class='ToDoSidebarItem__Title'><a href='/courses/185000/assignments/8313260' class='fOyUs_bGBk fbyHH_bGBk fbyHH_vIby'><span wrap='normal' letter-spacing='normal' class='enRcg_bGBk enRcg_doqw enRcg_fNIu enRcg_eQnG'>${data[i].assignment.name}</span></a></div><span color='secondary' wrap='normal' letter-spacing='normal' class='enRcg_bGBk enRcg_doqw enRcg_bdMA enRcg_fNIu enRcg_eQnG enRcg_bLsb'>${data[i].context_name}</span><ul class='fOyUs_bGBk fOyUs_UeJS' style='margin: 0px; padding: 0px;'><li class='fOyUs_bGBk fOyUs_cuDs ctrLD_bGBk ctrLD_doqw ctrLD_dnHs'style='padding: 0px; max-width: 100%;'>${new Date(data[i].assignment.due_at).toLocaleDateString("en-US", { month: 'short', day: 'numeric', hour: 'numeric', minute:'numeric'}).substring(0,new Date(data[i].assignment.due_at).toLocaleDateString("en-US", { month: 'short', day: 'numeric', hour: 'numeric', minute:'numeric'}).length-3).replace(',', ' at')}<span class='ctrLD_eLRq' aria-hidden='true'></span></li></ul></div><div class='ToDoSidebarItem__Close'><span class='ejhDx_bGBk ejhDx_doBn ejhDx_coHh'><button cursor='pointer' type='button' tabindex='0' class='fOyUs_bGBk fOyUs_fKyb fOyUs_cuDs fOyUs_cBHs fOyUs_eWbJ fOyUs_fmDy fOyUs_eeJl fOyUs_cBtr fOyUs_fuTR fOyUs_cnfU fQfxa_bGBk' style='margin: 0px; padding: 0px; border-radius: 0.25rem; border-width: 0px; width: auto; cursor: pointer;'><span class='fQfxa_caGd fQfxa_VCXp fQfxa_buuG fQfxa_EMjX fQfxa_bCUx fQfxa_bVmg fQfxa_bIHL'><span direction='row' wrap='no-wrap' class='fOyUs_bGBk fOyUs_desw bDzpk_bGBk bDzpk_eRIA bDzpk_fZWR bDzpk_qOas' style='width: 100%; height: 100%;'><span class='fOyUs_bGBk dJCgj_bGBk'><span class='fQfxa_eoCh'><svg name='IconX' viewBox='0 0 1920 1920' rotate='0' width='1em' height='1em' aria-hidden='true' role='presentation' focusable='false' class='dUOHu_bGBk dUOHu_drOs dUOHu_eXrk cGqzL_bGBk' style='width: 1em; height: 1em;'> <g role='presentation'> <path d='M797.319865 985.881673L344.771525 1438.43001 533.333333 1626.99182 985.881673 1174.44348 1438.43001 1626.99182 1626.99182 1438.43001 1174.44348 985.881673 1626.99182 533.333333 1438.43001 344.771525 985.881673 797.319865 533.333333 344.771525 344.771525 533.333333z' fill-rule='nonzero' stroke='none' stroke-width='1'></path> </g> </svg></span><span class='ergWt_bGBk'>Dismiss ${data[i].context_name}</span></span></span></span></button></span></div> </div> </li>`
+                    listItemtmp.innerHTML = `<li class='fOyUs_bGBk jpyTq_bGBk jpyTq_ycrn' style='padding: 0px; max-width: 100%;'><div class='ToDoSidebarItem'><svg label='Assignment' name='IconAssignment' viewBox='0 0 1920 1920' rotate='0' width='1em' height='1em' aria-hidden='true' role='presentation' focusable='false' class='dUOHu_bGBk dUOHu_drOs dUOHu_eXrk cGqzL_bGBk cGqzL_owrh ToDoSidebarItem__Icon' style='width: 1em; height: 1em;'><g role='presentation'><path d='M1468.2137,0 L1468.2137,564.697578 L1355.27419,564.697578 L1355.27419,112.939516 L112.939516,112.939516 L112.939516,1807.03225 L1355.27419,1807.03225 L1355.27419,1581.15322 L1468.2137,1581.15322 L1468.2137,1919.97177 L2.5243549e-29,1919.97177 L2.5243549e-29,0 L1468.2137,0 Z M1597.64239,581.310981 C1619.77853,559.174836 1655.46742,559.174836 1677.60356,581.310981 L1677.60356,581.310981 L1903.4826,807.190012 C1925.5058,829.213217 1925.5058,864.902104 1903.4826,887.038249 L1903.4826,887.038249 L1225.8455,1564.67534 C1215.22919,1575.17872 1200.88587,1581.16451 1185.86491,1581.16451 L1185.86491,1581.16451 L959.985883,1581.16451 C928.814576,1581.16451 903.516125,1555.86606 903.516125,1524.69475 L903.516125,1524.69475 L903.516125,1298.81572 C903.516125,1283.79477 909.501919,1269.45145 920.005294,1258.94807 L920.005294,1258.94807 Z M1442.35055,896.29929 L1016.45564,1322.1942 L1016.45564,1468.225 L1162.48643,1468.225 L1588.38135,1042.33008 L1442.35055,896.29929 Z M677.637094,1242.34597 L677.637094,1355.28548 L338.818547,1355.28548 L338.818547,1242.34597 L677.637094,1242.34597 Z M903.516125,1016.46693 L903.516125,1129.40645 L338.818547,1129.40645 L338.818547,1016.46693 L903.516125,1016.46693 Z M1637.62298,701.026867 L1522.19879,816.451052 L1668.22958,962.481846 L1783.65377,847.057661 L1637.62298,701.026867 Z M1129.39516,338.829841 L1129.39516,790.587903 L338.818547,790.587903 L338.818547,338.829841 L1129.39516,338.829841 Z M1016.45564,451.769356 L451.758062,451.769356 L451.758062,677.648388 L1016.45564,677.648388 L1016.45564,451.769356 Z' fill-rule='evenodd' stroke='none' stroke-width='1'></path></g></svg><div class='ToDoSidebarItem__Info'><div class='ToDoSidebarItem__Title'><a href='${data[i].assignment.html_url}' class='fOyUs_bGBk fbyHH_bGBk fbyHH_vIby'><span wrap='normal' letter-spacing='normal' class='enRcg_bGBk enRcg_doqw enRcg_fNIu enRcg_eQnG'>${data[i].assignment.name}</span></a></div><span color='secondary' wrap='normal' letter-spacing='normal' class='enRcg_bGBk enRcg_doqw enRcg_bdMA enRcg_fNIu enRcg_eQnG enRcg_bLsb'>${data[i].context_name}</span><ul class='fOyUs_bGBk fOyUs_UeJS' style='margin: 0px; padding: 0px;'><li class='fOyUs_bGBk fOyUs_cuDs ctrLD_bGBk ctrLD_doqw ctrLD_dnHs'style='padding: 0px; max-width: 100%;'>${new Date(data[i].assignment.due_at).toLocaleDateString("en-US", { month: 'short', day: 'numeric', hour: 'numeric', minute:'numeric'}).substring(0,new Date(data[i].assignment.due_at).toLocaleDateString("en-US", { month: 'short', day: 'numeric', hour: 'numeric', minute:'numeric'}).length-3).replace(',', ' at')}<span class='ctrLD_eLRq' aria-hidden='true'></span></li></ul></div><div class='ToDoSidebarItem__Close'><span class='ejhDx_bGBk ejhDx_doBn ejhDx_coHh'><button id='listElem${i}' cursor='pointer' type='button' tabindex='0' class='fOyUs_bGBk fOyUs_fKyb fOyUs_cuDs fOyUs_cBHs fOyUs_eWbJ fOyUs_fmDy fOyUs_eeJl fOyUs_cBtr fOyUs_fuTR fOyUs_cnfU fQfxa_bGBk' style='margin: 0px; padding: 0px; border-radius: 0.25rem; border-width: 0px; width: auto; cursor: pointer;'><span class='fQfxa_caGd fQfxa_VCXp fQfxa_buuG fQfxa_EMjX fQfxa_bCUx fQfxa_bVmg fQfxa_bIHL'><span direction='row' wrap='no-wrap' class='fOyUs_bGBk fOyUs_desw bDzpk_bGBk bDzpk_eRIA bDzpk_fZWR bDzpk_qOas' style='width: 100%; height: 100%;'><span class='fOyUs_bGBk dJCgj_bGBk'><span class='fQfxa_eoCh'><svg name='IconX' viewBox='0 0 1920 1920' rotate='0' width='1em' height='1em' aria-hidden='true' role='presentation' focusable='false' class='dUOHu_bGBk dUOHu_drOs dUOHu_eXrk cGqzL_bGBk' style='width: 1em; height: 1em;'> <g role='presentation'> <path d='M797.319865 985.881673L344.771525 1438.43001 533.333333 1626.99182 985.881673 1174.44348 1438.43001 1626.99182 1626.99182 1438.43001 1174.44348 985.881673 1626.99182 533.333333 1438.43001 344.771525 985.881673 797.319865 533.333333 344.771525 344.771525 533.333333z' fill-rule='nonzero' stroke='none' stroke-width='1'></path> </g> </svg></span><span class='ergWt_bGBk'>Dismiss ${data[i].context_name}</span></span></span></span></button></span></div> </div> </li>`
                     listItem[i] = listItemtmp;
                 }
 
@@ -248,14 +248,17 @@ function setBetterTODO()  {
                 // }
             }
 
-            await waitForElm('.todo-list-header').then((elm) => elm.appendChild(todoButton));
+            // await waitForElm('.todo-list-header').then((elm) => elm.appendChild(todoButton));
 
             const btnAppend = await waitForElm('.ToDoSidebarItem').then(() => {
                 var todoHeader = document.getElementsByClassName('todo-list-header')[0];
                 todoHeader.appendChild(todoButton);
                 insertTODO(todoButton);
                 for (var i = 0; i < listItem.length; i++)  {
+                    console.log(data[i].ignore);
+                    var linke = data[i].ignore;
                     listContainer.appendChild(listItem[i]);
+                    document.getElementById(`listElem${i}`).onclick = () => {fetch(linke, {method:"DELETE"}); listItem[i].remove();};
                 }
             })
 
@@ -263,10 +266,12 @@ function setBetterTODO()  {
                 if (todoButton.value == 'true')  {
                     document.getElementById('planner-todosidebar-item-list').style.display = "none";
                     listContainer.style.display = "block";
+                    document.getElementsByClassName('fOyUs_bGBk fOyUs_ImeN')[0].style.display = 'none';
                 }
                 if (todoButton.value == 'false')  {
                     document.getElementById('planner-todosidebar-item-list').style.display = "block";
                     listContainer.style.display = "none";
+                    document.getElementsByClassName('fOyUs_bGBk fOyUs_ImeN')[0].style.display = 'block';
                 }
             }
 
