@@ -33,7 +33,7 @@ chrome.storage.sync.get(['betterTODOTogl'], function (result) {
     }
 });
 
-
+if (document.getElementById("section-tabs-header-subtitle")) document.getElementById("section-tabs-header-subtitle").innerText += '\n'+ document.getElementById("breadcrumbs").children[0].children[1].children[0].children[0].innerText;
 document.getElementById("global_nav_conversations_link").children[1].innerHTML = "Email";
 var id = window.location.href;
 
