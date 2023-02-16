@@ -37,6 +37,47 @@ if (document.getElementById("section-tabs-header-subtitle")) document.getElement
 document.getElementById("global_nav_conversations_link").children[1].innerHTML = "Email";
 var id = window.location.href;
 
+if (id == "https://hcpss.instructure.com" || id == "https://hcpss.instructure.com/" || id == "https://hcpss.instructure.com/#homeroom" || id == "https://hcpss.instructure.com/#dashboard-activity") {
+    var actualCode =
+    'window.prefetched_xhrs["/api/v1/dashboard/dashboard_cards"] = new Promise((resolve, reject) =>  {fetch ("/api/v1/dashboard/dashboard_cards", {"credentials":"same-origin","headers":{"Accept":"application/json+canvas-string-ids, application/json","X-Requested-With":"XMLHttpRequest"}}).then(res => res.json().then(data => ({headers: [...res.headers], body: data}))).then(json => {'+
+        'json.body.forEach(element => {'+
+            'var obj = {css_class: "assignments", icon: "icon-module", path: `${element.href}/modules`, label: "Modules"};'+
+            'if (element.links.length >= 4)  {'+
+                'element.links[3] = obj;'+
+            '} else {'+
+                'element.links.push(obj);'+
+            '}'+
+        '});'+
+        'const blob = new Blob([JSON.stringify(json.body, null, 2)], {'+
+            'type: "application/json",'+
+          '});'+
+        'const options = {status: 200, headers: new Headers(json.headers)};'+
+        'resolve(new Response(blob, options));'+
+    '})});';
+
+    document.documentElement.setAttribute('onreset', actualCode);
+    document.documentElement.dispatchEvent(new CustomEvent('reset'));
+    document.documentElement.removeAttribute('onreset');
+
+    // window.prefetched_xhrs["/api/v1/dashboard/dashboard_cards"] = new Promise((resolve, reject) =>  {fetch ("/api/v1/dashboard/dashboard_cards", {"credentials":"same-origin","headers":{"Accept":"application/json+canvas-string-ids, application/json","X-Requested-With":"XMLHttpRequest"}}).then(res => res.json().then(data => ({headers: [...res.headers], body: data}))).then(json => {
+    //     json.body.forEach(element => {
+    //         var obj = {css_class: "assignments", icon: "icon-module", path: `${element.href}/modules`, label: "Modules"};
+    //         if (element.links.length >= 4)  {
+    //             element.links[3] = obj;
+    //         } else {
+    //             element.links.push(obj);
+    //         }
+    //     });
+    //     const blob = new Blob([JSON.stringify(json.body, null, 2)], {
+    //         type: "application/json",
+    //       });
+    //     const options = {status: 200, headers: new Headers(json.headers)};
+    //     resolve(new Response(blob, options));
+    // })});
+
+
+}
+
 
 //https://hcpss.instructure.com/api/v1/courses/189271/tabs
 // function setTabs()  {
