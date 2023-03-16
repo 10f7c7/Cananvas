@@ -4,6 +4,11 @@
 //changePage();
 
 
+
+
+//  CRETE GLOBAL FEATURE AUTO REMOVED MUTATION OBSERVER TO AUTMOATICALL PUT SOMEHTING BACK IF REMOVED BY PAGAE
+
+
 /* chrome.runtime.sendMessage('get-grade-options', (response) => {
     if (response === true)  {
         setGrade();
@@ -124,17 +129,19 @@ function setGrade() {
             observer.disconnect();
             for (var i = 0; i < courseCard.length; i++) {
                 var crsnm = courseCard[i].children[0].children[2].href;
-                var crsnmstr = crsnm[38] + crsnm[39] + crsnm[40] + crsnm[41] + crsnm[42] + crsnm[43];
+                var crsnmstr = courseCard[i].children[0].children[2].getAttribute("href");
+                if (crsnmstr.length != 15) crsnmstr = null;
+                // var crsnmstr = crsnm[38] + crsnm[39] + crsnm[40] + crsnm[41] + crsnm[42] + crsnm[43];
                 var div = document.createElement('DIV');
                 div.setAttribute("style", `z-index: 10; position: absolute; background-color: white; height: 22px; padding-right: 5px; padding-left: 5px; margin-top: 10px; margin-right: 10px; margin-left: 10px; float: left; border-radius: 10px; text-align: center; color: back; font-weight: bold;`);
                 div.innerText = "N/A";
-                div.setAttribute("onclick", "window.open('https://hcpss.instructure.com/courses/" + crsnmstr + "/grades'); event.stopPropagation()");
+                div.setAttribute("onclick", "window.open('https://hcpss.instructure.com" + crsnmstr + "/grades'); event.stopPropagation()");
                 courseCard[i].children[0].insertBefore(div, courseCard[i].children[0].children[0]);
-                $.ajax({ url: "https://hcpss.instructure.com/api/v1/courses/" + crsnmstr + "/enrollments?user_id=self", method: "GET", async: false }).done(function (response) {
+                $.ajax({ url: "https://hcpss.instructure.com/api/v1" + crsnmstr + "/enrollments?user_id=self", method: "GET", async: false }).done(function (response) {
                     var str = JSON.stringify(response);
                     var grd = JSON.parse(str);
                     var currentQuart;
-                    $.ajax({ url: `https://hcpss.instructure.com/api/v1/courses/${crsnmstr}/grading_periods`, method: "GET", async: false }).done(function (response) {
+                    $.ajax({ url: `https://hcpss.instructure.com/api/v1${crsnmstr}/grading_periods`, method: "GET", async: false }).done(function (response) {
                         var quart = response.grading_periods;
                         // console.log("quart" + quart);
 
@@ -187,6 +194,25 @@ function setGrade() {
                 });
                 div.style.color = document.querySelectorAll(".ic-DashboardCard__header_hero")[i].style.backgroundColor;
             }
+            var element = div;
+            var in_dom = document.body.contains(element);
+            var observere = new MutationObserver(function(mutations) {
+                if (document.body.contains(element)) {
+                    if (!in_dom) {
+                        // console.log("element inserted");
+                    }
+                    in_dom = true;
+                } else if (in_dom) {
+                    in_dom = false;
+                    addGrade();
+                    console.log("element removed");
+                }
+
+            });
+            observere.observe(document.body, {childList: true, subtree: true});
+
+
+
         }
     }
 }
@@ -360,7 +386,6 @@ function setBetterTODO() {
                 data = response.sort((a, b) => {return new Date(a.assignment.due_at) - new Date(b.assignment.due_at)});
                 listContainer.setAttribute('class', 'fOyUs_bGBk fOyUs_UeJS fClCc_bGBk fClCc_fLbg');
                 listContainer.setAttribute('display', 'none');
-                document.querySelector("div[data-testid='ToDoSidebar']").appendChild(listContainer);
 
                 for (var j = 0; j < data.length; j++) {
                     listItem[j] = createToDoItem(data[j], j);
@@ -403,6 +428,8 @@ function setBetterTODO() {
                     listContainer.append(listItem[i]);
                     // document.getElementById(`listElem${i}`).onclick = () => {$.ajax({url: linke, type: "DELETE"}); listItem[i].remove();};
                 }
+                document.querySelector("div[data-testid='ToDoSidebar']").appendChild(listContainer);
+
             })
 
             function insertTODO(todoButton) {
