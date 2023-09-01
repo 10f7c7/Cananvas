@@ -84,6 +84,12 @@ if (id == "https://hcpss.instructure.com" || id == "https://hcpss.instructure.co
 }
 
 
+if (id.includes("discussion_topics")) {
+    document.querySelectorAll(".discussion-entries").forEach(element => {
+        element.style.borderLeft = "solid 5px #c1c7cf";
+    });
+}
+
 //https://hcpss.instructure.com/api/v1/courses/189271/tabs
 // function setTabs()  {
 //     if (id.includes("https://hcpss.instructure.com/courses")) {
