@@ -15,24 +15,25 @@
     }
     console.log('received user data', response);
 }); */
-chrome.storage.sync.get(['grdTogl'], function (result) {
+console.log("content script running");
+browser.storage.local.get(['grdTogl'], function (result) {
     if (result.grdTogl == true) {
         setGrade();
     }
 });
-// chrome.storage.sync.get(['tabTogl'], function(result){
+// browser.storage.local.get(['tabTogl'], function(result){
 //     if (result.tabTogl == true)  {
 //         setTabs();
 //     }
 // });
-chrome.storage.sync.get(['asgmtBckBtnTogl'], function (result) {
+browser.storage.local.get(['asgmtBckBtnTogl'], function (result) {
     if (result.asgmtBckBtnTogl == true) {
         setAsgmtBckBtn();
     }
 });
 
 
-chrome.storage.sync.get(['betterTODOTogl'], function (result) {
+browser.storage.local.get(['betterTODOTogl'], function (result) {
     if (result.betterTODOTogl == true) {
         setBetterTODO();
     }
@@ -131,76 +132,71 @@ function setGrade() {
         var menuBtn = document.getElementsByClassName("ic-DashboardCard__header-button");
         var observer = new MutationObserver(addGrade);
         observer.observe(document.getElementById("DashboardCard_Container"), { childList: true, subtree: true });
-        function addGrade() {
+        async function addGrade() {
             observer.disconnect();
-            for (var i = 0; i < courseCard.length; i++) {
-                var crsnm = courseCard[i].children[0].children[2].href;
-                var crsnmstr = courseCard[i].children[0].children[2].getAttribute("href");
-                if (crsnmstr.length != 15) crsnmstr = null;
-                // var crsnmstr = crsnm[38] + crsnm[39] + crsnm[40] + crsnm[41] + crsnm[42] + crsnm[43];
+            const courseCardList = Object.values(courseCard);
+
+            console.log(courseCardList);
+            courseCardList.forEach(async(card) => {
+                var crsurl = card.children[0].children[2].href;
+                const regex = /(?<=\/)\d{6}(?=\/|$)/gm;
+                try {
+                    var crsid = regex.exec(crsurl)[0];
+                } catch (error) {
+                    console.log(error);
+                    return
+                }
                 var div = document.createElement('DIV');
+                div.setAttribute("class", "courseCardGrade");
                 div.setAttribute("style", `z-index: 10; position: absolute; background-color: white; height: 22px; padding-right: 5px; padding-left: 5px; margin-top: 10px; margin-right: 10px; margin-left: 10px; float: left; border-radius: 10px; text-align: center; color: back; font-weight: bold;`);
                 div.innerText = "N/A";
-                div.setAttribute("onclick", "window.open('https://hcpss.instructure.com" + crsnmstr + "/grades'); event.stopPropagation()");
-                courseCard[i].children[0].insertBefore(div, courseCard[i].children[0].children[0]);
-                $.ajax({ url: "https://hcpss.instructure.com/api/v1" + crsnmstr + "/enrollments?user_id=self", method: "GET", async: false }).done(function (response) {
-                    var str = JSON.stringify(response);
-                    var grd = JSON.parse(str);
-                    var currentQuart;
-                    $.ajax({ url: `https://hcpss.instructure.com/api/v1${crsnmstr}/grading_periods`, method: "GET", async: false }).done(function (response) {
-                        var quart = response.grading_periods;
-                        // console.log("quart" + quart);
+                div.setAttribute("onclick", `window.open('https://hcpss.instructure.com/courses/${crsid}/grades'); event.stopPropagation()`);
+                card.children[0].insertBefore(div, card.children[0].children[0]);
 
-                        var date = new Date();
-                        var time = date.toISOString();
-                        var timeFormated = time.slice(0, 10);
-                        for (var quarter in quart) {
-                            let current = quart[quarter];
-                            let startTime = current.start_date;
-                            startTime = startTime.slice(0, 10);
-                            // console.log("starttime" + startTime);
+                var grdFetch = await fetch(`https://hcpss.instructure.com/api/v1/courses/${crsid}/enrollments?user_id=self`);//.then((res) => console.log(res));
+                var grd = await grdFetch.json();
 
-                            let endTime = current.end_date;
-                            endTime = endTime.slice(0, 10);
-                            // console.log("endtime" + endTime);
+                var quartFetch = await fetch(`https://hcpss.instructure.com/api/v1/courses/${crsid}/grading_periods`);
+                var quart = (await quartFetch.json()).grading_periods;
+                var date = new Date();
+                var time = date.toISOString();
+                var currentQuart;
+                for (var quarter in quart) {
+                    let current = quart[quarter];
+                    let startTime = current.start_date;
+                    startTime = startTime.slice(0, 10);
 
-                            let currentDate = new Date();
+                    let endTime = current.end_date;
+                    endTime = endTime.slice(0, 10);
 
-                            let startDate = new Date(currentDate.getTime());
-                            startDate.setYear(startTime.split("-")[0]);
-                            startDate.setMonth(startTime.split("-")[1] - 1);
-                            startDate.setDate(startTime.split("-")[2]);
-                            // console.log("startdate"+startDate);
-                            let endDate = new Date(currentDate.getTime());
-                            endDate.setYear(endTime.split("-")[0]);
-                            endDate.setMonth(endTime.split("-")[1] - 1);
-                            endDate.setDate(endTime.split("-")[2]);
-                            // console.log("endDate" + endDate);
+                    let currentDate = new Date();
 
-                            let valid = startDate <= currentDate && endDate > currentDate;
-                            // console.log(valid)
-                            // console.log("current" + currentDate);
-                            if (valid == true) {
-                                currentQuart = quart[quarter];
-                                // console.log("currentQuart"+currentQuart);
-                            }
+                    let startDate = new Date(currentDate.getTime());
+                    startDate.setYear(startTime.split("-")[0]);
+                    startDate.setMonth(startTime.split("-")[1] - 1);
+                    startDate.setDate(startTime.split("-")[2]);
+                    let endDate = new Date(currentDate.getTime());
+                    endDate.setYear(endTime.split("-")[0]);
+                    endDate.setMonth(endTime.split("-")[1] - 1);
+                    endDate.setDate(endTime.split("-")[2]);
 
-                        }
-                        // console.log("format" + timeFormated);
-                    });
-                    $.ajax({ url: `https://hcpss.instructure.com/grades_for_student?grading_period_id=${currentQuart.id}&enrollment_id=312300000${grd[0].id}`, method: "GET", async: false }).done(function (response1) {
-                        var str1 = JSON.stringify(response1);
-                        var grd1 = JSON.parse(str1);
-                        var grd2 = grd1.grade + "%"
-                        if (grd1.grade == null) {
-                            grd2 = "N/A";
-                        }
-                        div.innerText = grd2;
-                    });
-                });
+                    let valid = startDate <= currentDate && endDate > currentDate;
+                    if (valid == true) {
+                        currentQuart = quart[quarter];
+                    }
+
+                }
+                var grd1Fetch = await fetch(`https://hcpss.instructure.com/grades_for_student?grading_period_id=${currentQuart.id}&enrollment_id=312300000${grd[0].id}`);
+                var grd1 = await grd1Fetch.json();
+                var grd2 = grd1.grade + "%"
+                if (grd1.grade == null) {
+                    grd2 = "N/A";
+                }
+                div.innerText = grd2;
                 div.style.color = document.querySelectorAll(".ic-DashboardCard__header_hero")[i].style.backgroundColor;
-            }
-            var element = div;
+                return;
+            });
+            var element = document.getElementsByClassName("courseCardGrade")[0];
             var in_dom = document.body.contains(element);
             var observere = new MutationObserver(function(mutations) {
                 if (document.body.contains(element)) {

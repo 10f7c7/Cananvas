@@ -9,7 +9,7 @@
     "options_page": "options/options.html",
     "content_scripts": [
       {
-        "matches": ["https://hcpss.instructure.com/*"],
+        "matches": ["https://*.instructure.com/*", "https://hcpss.instructure.com/*"],
         "js": ["thirdParty/jquery-3.6.0.js", "content-script.js"]
       }
     ],
@@ -22,7 +22,14 @@
       "256": "icons/icon256.png",
       "512": "icons/icon512.png"
     },
-    "background": {
-      "service_worker": "background.js"
+    "browser_specific_settings": {
+      "gecko": {
+        "id": "canavas@10f7c7.dev",
+        "strict_min_version": "42.0"
+      }
     }
+    //,
+    // "background": {
+    //   "service_worker": "background.js"
+    // }
   }
