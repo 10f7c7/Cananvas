@@ -39,7 +39,11 @@ browser.storage.local.get(['betterTODOTogl'], function (result) {
     }
 });
 
-if (document.getElementById("section-tabs-header-subtitle")) document.getElementById("section-tabs-header-subtitle").innerText += '\n'+ document.getElementById("breadcrumbs").children[0].children[1].children[0].children[0].innerText;
+
+var thisisveryname = setInterval(function () {
+    if (document.getElementById("section-tabs-header-subtitle")) document.getElementById("section-tabs-header-subtitle").innerText += '\n'+ document.getElementById("breadcrumbs").children[0].children[1].children[0].children[0].innerText;
+}, 4000);
+
 document.getElementById("global_nav_conversations_link").children[1].innerHTML = "Email";
 var id = window.location.href;
 
@@ -136,7 +140,6 @@ function setGrade() {
             observer.disconnect();
             const courseCardList = Object.values(courseCard);
 
-            console.log(courseCardList);
             courseCardList.forEach(async(card) => {
                 var crsurl = card.children[0].children[2].href;
                 const regex = /(?<=\/)\d{6}(?=\/|$)/gm;
@@ -367,13 +370,8 @@ function setBetterTODO() {
 
                 itemDom.querySelector(`#todoItem${i}-btn`).onclick = () => {
                     var ignoreLink = data.ignore;
-                    // console.log(ignoreLink);
-                    // const xhttp = new XMLHttpRequest();
-                    // xhttp.open("DELETE", data.ignore);
-                    // xhttp.send();
-                    $.ajax({url: `${data.ignore}`, type: "DELETE", headers: {'X-CSRF-Token': `${decodeURIComponent((document.cookie.match('(^|;) *_csrf_token=([^;]*)') || '')[2])}`}}).fail(function(err) {
-                        console.log(err);
-                    });
+
+                    fetch(ignoreLink, {method:"DELETE", headers: {'X-CSRF-Token': `${decodeURIComponent((document.cookie.match('(^|;) *_csrf_token=([^;]*)') || '')[2])}`}}).catch((err) => console.log(err));
                     document.querySelector(`#todoItem${i}`).remove();
                 };
 
@@ -384,16 +382,17 @@ function setBetterTODO() {
 
             var data = [];
 
-            $.ajax({ url: 'https://hcpss.instructure.com/api/v1/users/self/todo' }).done((response) => {
-                data = response.sort((a, b) => {return new Date(a.assignment.due_at) - new Date(b.assignment.due_at)});
-                listContainer.setAttribute('class', 'fOyUs_bGBk fOyUs_UeJS fClCc_bGBk fClCc_fLbg');
-                listContainer.setAttribute('display', 'none');
 
-                for (var j = 0; j < data.length; j++) {
-                    listItem[j] = createToDoItem(data[j], j);
-                }
+            var assignmentFetch = await fetch(`https://hcpss.instructure.com/api/v1/users/self/todo`)
+            var assignment = (await assignmentFetch.json());
 
-            })
+            data = assignment.sort((a, b) => { return new Date(a.assignment.due_at) - new Date(b.assignment.due_at) });
+            listContainer.setAttribute('class', 'fOyUs_bGBk fOyUs_UeJS fClCc_bGBk fClCc_fLbg');
+            listContainer.setAttribute('display', 'none');
+
+            for (var j = 0; j < data.length; j++) {
+                listItem[j] = createToDoItem(data[j], j);
+            }
 
             // https://du11hjcvx0uqb.cloudfront.net/dist/webpack-production/94237-c-bf251b2a9c.js
 
@@ -425,10 +424,7 @@ function setBetterTODO() {
                 todoHeader.appendChild(todoButton);
                 insertTODO(todoButton);
                 for (var i = 0; i < listItem.length; i++) {
-                    // console.log(data[i].ignore);
-                    var linke = data[i].ignore;
                     listContainer.append(listItem[i]);
-                    // document.getElementById(`listElem${i}`).onclick = () => {$.ajax({url: linke, type: "DELETE"}); listItem[i].remove();};
                 }
                 document.querySelector("div[data-testid='ToDoSidebar']").appendChild(listContainer);
 
