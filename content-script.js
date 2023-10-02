@@ -42,7 +42,7 @@ browser.storage.local.get(['betterTODOTogl'], function (result) {
 
 var thisisveryname = setInterval(function () {
     if (document.getElementById("section-tabs-header-subtitle")) document.getElementById("section-tabs-header-subtitle").innerText += '\n'+ document.getElementById("breadcrumbs").children[0].children[1].children[0].children[0].innerText;
-}, 4000);
+}, 9000);
 
 document.getElementById("global_nav_conversations_link").children[1].innerHTML = "Email";
 var id = window.location.href;
@@ -95,6 +95,34 @@ if (id.includes("discussion_topics")) {
     });
 }
 
+async function postedAt()  {
+    if (id.includes("assignments"))  {
+        console.log("assignments");
+        var postedAt = document.createElement("li");
+        var Label = document.createElement("span");
+        Label.innerText = "Posted";
+        Label.setAttribute("class", "title");
+        postedAt.appendChild(Label);
+        var date = document.createElement("span");
+        date.setAttribute("class", "value");
+        postedAt.appendChild(date);
+
+        var courseId = window.location.href.split("/")[4];
+        var asgmtId = window.location.href.split("/")[6];
+        var asgmtFetch = await fetch(`https://hcpss.instructure.com/api/v1/courses/${courseId}/assignments/${asgmtId}`);
+        var asgmt = (await asgmtFetch.json());
+        var postedAtDate = new Date((asgmt.unlock_at == null) ? asgmt.created_at : asgmt.unlock_at);
+        // date.innerText = "at ";
+        date.innerText += (postedAtDate.toLocaleDateString("en-US", {month: "short", year: "numeric", day: "numeric", hour: "numeric", minute: "numeric", hour12: true})).replace(", ", " at ").replace(" AM", "am").replace(" PM", "pm");
+
+        document.getElementsByClassName("student-assignment-overview")[0].prepend(postedAt);
+
+        // console.log(courseId);
+    // console.log(document.getElementsByTagName("head")[0].getElementsByTagName("script")[3]);
+
+    }
+}
+postedAt();
 //https://hcpss.instructure.com/api/v1/courses/189271/tabs
 // function setTabs()  {
 //     if (id.includes("https://hcpss.instructure.com/courses")) {
