@@ -113,7 +113,7 @@ async function postedAt()  {
 
         var courseId = window.location.href.split("/")[4];
         var asgmtId = window.location.href.split("/")[6];
-        var asgmtFetch = await fetch(`https://${URL}.instructure.com/api/v1/courses/${courseId}/assignments/${asgmtId}`);
+        var asgmtFetch = await fetch(`https://hcpss.instructure.com/api/v1/courses/${courseId}/assignments/${asgmtId}`);
         var asgmt = (await asgmtFetch.json());
         var postedAtDate = new Date((asgmt.unlock_at == null) ? asgmt.created_at : asgmt.unlock_at);
         // date.innerText = "at ";
@@ -127,7 +127,7 @@ async function postedAt()  {
     }
 }
 postedAt();
-//https://${URL}.instructure.com/api/v1/courses/189271/tabs
+//https://hcpss.instructure.com/api/v1/courses/189271/tabs
 // function setTabs()  {
 //     if (id.includes("https://${URL}.instructure.com/courses")) {
 //         var idStr = id[38] + id[39] + id[40] + id[41] + id[42] + id[43];
@@ -188,10 +188,10 @@ function setGrade() {
                 div.setAttribute("onclick", `window.open('https://${URL}.instructure.com/courses/${crsid}/grades'); event.stopPropagation()`);
                 card.children[0].insertBefore(div, card.children[0].children[0]);
 
-                var grdFetch = await fetch(`https://${URL}.instructure.com/api/v1/courses/${crsid}/enrollments?user_id=self`);//.then((res) => console.log(res));
+                var grdFetch = await fetch(`https://hcpss.instructure.com/api/v1/courses/${crsid}/enrollments?user_id=self`);//.then((res) => console.log(res));
                 var grd = await grdFetch.json();
 
-                var quartFetch = await fetch(`https://${URL}.instructure.com/api/v1/courses/${crsid}/grading_periods`);
+                var quartFetch = await fetch(`https://hcpss.instructure.com/api/v1/courses/${crsid}/grading_periods`);
                 var quart = (await quartFetch.json()).grading_periods;
                 var date = new Date();
                 var time = date.toISOString();
@@ -415,7 +415,7 @@ function setBetterTODO() {
             var data = [];
 
 
-            var assignmentFetch = await fetch(`https://${URL}.instructure.com/api/v1/users/self/todo`)
+            var assignmentFetch = await fetch(`https://hcpss.instructure.com/api/v1/users/self/todo`)
             var assignment = (await assignmentFetch.json());
 
             data = assignment.sort((a, b) => { return new Date(a.assignment.due_at) - new Date(b.assignment.due_at) });
