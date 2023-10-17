@@ -47,7 +47,11 @@ var thisisveryname = setInterval(function () {
 document.getElementById("global_nav_conversations_link").children[1].innerHTML = "Email";
 var id = window.location.href;
 
-if (id == "https://hcpss.instructure.com" || id == "https://hcpss.instructure.com/" || id == "https://hcpss.instructure.com/#homeroom" || id == "https://hcpss.instructure.com/#dashboard-activity") {
+
+const URL = window.location.hostname.split('.').slice(0, -2).join('.');
+
+
+if (id == `https://${URL}.instructure.com` || id == `https://${URL}.instructure.com/` || id == `https://${URL}.instructure.com/#homeroom` || id == `https://${URL}.instructure.com/#dashboard-activity`) {
     var actualCode =
     'window.prefetched_xhrs["/api/v1/dashboard/dashboard_cards"] = new Promise((resolve, reject) =>  {fetch ("/api/v1/dashboard/dashboard_cards", {"credentials":"same-origin","headers":{"Accept":"application/json+canvas-string-ids, application/json","X-Requested-With":"XMLHttpRequest"}}).then(res => res.json().then(data => ({headers: [...res.headers], body: data}))).then(json => {'+
         'json.body.forEach(element => {'+
@@ -109,7 +113,7 @@ async function postedAt()  {
 
         var courseId = window.location.href.split("/")[4];
         var asgmtId = window.location.href.split("/")[6];
-        var asgmtFetch = await fetch(`https://hcpss.instructure.com/api/v1/courses/${courseId}/assignments/${asgmtId}`);
+        var asgmtFetch = await fetch(`https://${URL}.instructure.com/api/v1/courses/${courseId}/assignments/${asgmtId}`);
         var asgmt = (await asgmtFetch.json());
         var postedAtDate = new Date((asgmt.unlock_at == null) ? asgmt.created_at : asgmt.unlock_at);
         // date.innerText = "at ";
@@ -123,9 +127,9 @@ async function postedAt()  {
     }
 }
 postedAt();
-//https://hcpss.instructure.com/api/v1/courses/189271/tabs
+//https://${URL}.instructure.com/api/v1/courses/189271/tabs
 // function setTabs()  {
-//     if (id.includes("https://hcpss.instructure.com/courses")) {
+//     if (id.includes("https://${URL}.instructure.com/courses")) {
 //         var idStr = id[38] + id[39] + id[40] + id[41] + id[42] + id[43];
 //         console.log(window.location.href);
 //         if (document.getElementById("wrapper").getElementsByClassName("ic-app-nav-toggle-and-crumbs") && document.getElementById("wrapper").getElementsByClassName("no-print"))  {
@@ -149,7 +153,7 @@ postedAt();
 //         crsmnu.id = 'left-side';
 //         crsmnu.setAttribute("class", "ic-app-course-menu ic-sticky-on list-view");
 //         crsmnu.setAttribute("style", "display: block; overflow: visible");
-//         crsmnu.innerHTML = "<div class='ic-sticky-frame'><span id='section-tabs-header-subtitle' class='ellipsis'>NE</span><nav role='navigation' aria-label='Courses Navigation Menu'><ul id='section-tabs'><li class='section'><a href='/courses/" + idStr + "' class='home' tabindex='0'>Home</a></li><li class='section'><a href='/courses/" + idStr + "/announcements' class='announcements' tabindex='0'>Announcements</a></li><li class='section'><a href='/courses/" + idStr + "/modules' class='modules' tabindex='0'>Modules</a></li><li class='section'><a href='/courses/" + idStr + "/assignments' class='assignments' tabindex='0'>Assignments</a></li><li class='section'><a href='/courses/" + idStr + "/grades' class='grades' tabindex='0'>Grades</a></li><li class='section'><a href='/courses/" + idStr + "/discussion_topics' class='discussions' tabindex='0'>Discussions</a></li><li class='section'><a href='/courses/" + idStr + "/assignments/syllabus' class='syllabus' tabindex='0'>Syllabus</a></li><li class='section'><a href='/courses/" + idStr + "/files' class='files' tabindex='0'>Files</a></li><li class='section'><a href='/courses/" + idStr + "/users' class='users' tabindex='0'>Users</a></li><li class='section'><a href='/courses/" + idStr + "/external_tools/38920' class='context_external_tool_38920' tabindex='0'>Google Drive</a></li><li class='section'><a href='/courses/" + idStr + "/external_tools/119166' class='context_external_tool_119166' tabindex='0'>HCPSS.me</a></li></ul></nav></div>";
+//         crsmnu.innerHTML = "<div class='ic-sticky-frame'><span id='section-tabs-header-subtitle' class='ellipsis'>NE</span><nav role='navigation' aria-label='Courses Navigation Menu'><ul id='section-tabs'><li class='section'><a href='/courses/" + idStr + "' class='home' tabindex='0'>Home</a></li><li class='section'><a href='/courses/" + idStr + "/announcements' class='announcements' tabindex='0'>Announcements</a></li><li class='section'><a href='/courses/" + idStr + "/modules' class='modules' tabindex='0'>Modules</a></li><li class='section'><a href='/courses/" + idStr + "/assignments' class='assignments' tabindex='0'>Assignments</a></li><li class='section'><a href='/courses/" + idStr + "/grades' class='grades' tabindex='0'>Grades</a></li><li class='section'><a href='/courses/" + idStr + "/discussion_topics' class='discussions' tabindex='0'>Discussions</a></li><li class='section'><a href='/courses/" + idStr + "/assignments/syllabus' class='syllabus' tabindex='0'>Syllabus</a></li><li class='section'><a href='/courses/" + idStr + "/files' class='files' tabindex='0'>Files</a></li><li class='section'><a href='/courses/" + idStr + "/users' class='users' tabindex='0'>Users</a></li><li class='section'><a href='/courses/" + idStr + "/external_tools/38920' class='context_external_tool_38920' tabindex='0'>Google Drive</a></li><li class='section'><a href='/courses/" + idStr + "/external_tools/119166' class='context_external_tool_119166' tabindex='0'>hcpss.me</a></li></ul></nav></div>";
 //         document.getElementById('main').insertBefore(crsmnu, document.getElementById('main').childNodes[0]);
 //         if (document.getElementById('k5-course-header-hero') != null)  {
 //             document.getElementById('k5-course-header-hero').style.height = "50px";
@@ -159,7 +163,7 @@ postedAt();
 // };
 
 function setGrade() {
-    if (id == "https://hcpss.instructure.com" || id == "https://hcpss.instructure.com/" || id == "https://hcpss.instructure.com/#homeroom" || id == "https://hcpss.instructure.com/#dashboard-activity") {
+    if (id == `https://${URL}.instructure.com` || id == `https://${URL}.instructure.com/` || id == `https://${URL}.instructure.com/#homeroom` || id == `https://${URL}.instructure.com/#dashboard-activity`) {
         var courseCard = document.getElementsByClassName("ic-DashboardCard");
         var menuBtn = document.getElementsByClassName("ic-DashboardCard__header-button");
         var observer = new MutationObserver(addGrade);
@@ -181,13 +185,13 @@ function setGrade() {
                 div.setAttribute("class", "courseCardGrade");
                 div.setAttribute("style", `z-index: 10; position: absolute; background-color: white; height: 22px; padding-right: 5px; padding-left: 5px; margin-top: 10px; margin-right: 10px; margin-left: 10px; float: left; border-radius: 10px; text-align: center; color: back; font-weight: bold;`);
                 div.innerText = "N/A";
-                div.setAttribute("onclick", `window.open('https://hcpss.instructure.com/courses/${crsid}/grades'); event.stopPropagation()`);
+                div.setAttribute("onclick", `window.open('https://${URL}.instructure.com/courses/${crsid}/grades'); event.stopPropagation()`);
                 card.children[0].insertBefore(div, card.children[0].children[0]);
 
-                var grdFetch = await fetch(`https://hcpss.instructure.com/api/v1/courses/${crsid}/enrollments?user_id=self`);//.then((res) => console.log(res));
+                var grdFetch = await fetch(`https://${URL}.instructure.com/api/v1/courses/${crsid}/enrollments?user_id=self`);//.then((res) => console.log(res));
                 var grd = await grdFetch.json();
 
-                var quartFetch = await fetch(`https://hcpss.instructure.com/api/v1/courses/${crsid}/grading_periods`);
+                var quartFetch = await fetch(`https://${URL}.instructure.com/api/v1/courses/${crsid}/grading_periods`);
                 var quart = (await quartFetch.json()).grading_periods;
                 var date = new Date();
                 var time = date.toISOString();
@@ -217,7 +221,7 @@ function setGrade() {
                     }
 
                 }
-                var grd1Fetch = await fetch(`https://hcpss.instructure.com/grades_for_student?grading_period_id=${currentQuart.id}&enrollment_id=312300000${grd[0].id}`);
+                var grd1Fetch = await fetch(`https://${URL}.instructure.com/grades_for_student?grading_period_id=${currentQuart.id}&enrollment_id=312300000${grd[0].id}`);
                 var grd1 = await grd1Fetch.json();
                 var grd2 = grd1.grade + "%"
                 if (grd1.grade == null) {
@@ -265,7 +269,7 @@ function setAsgmtBckBtn() {
 }
 
 function setBetterTODO() {
-    if (id == "https://hcpss.instructure.com" || id == "https://hcpss.instructure.com/" || id == "https://hcpss.instructure.com/#homeroom" || id == "https://hcpss.instructure.com/#dashboard-activity") {
+    if (id == `https://${URL}.instructure.com` || id == `https://${URL}.instructure.com/` || id == `https://${URL}.instructure.com/#homeroom` || id == `https://${URL}.instructure.com/#dashboard-activity`) {
 
         function waitForElm(selector) {
             return new Promise(resolve => {
@@ -411,7 +415,7 @@ function setBetterTODO() {
             var data = [];
 
 
-            var assignmentFetch = await fetch(`https://hcpss.instructure.com/api/v1/users/self/todo`)
+            var assignmentFetch = await fetch(`https://${URL}.instructure.com/api/v1/users/self/todo`)
             var assignment = (await assignmentFetch.json());
 
             data = assignment.sort((a, b) => { return new Date(a.assignment.due_at) - new Date(b.assignment.due_at) });

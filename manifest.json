@@ -6,10 +6,9 @@
     "action": {
       "default_popup": "popup/popup.html"
     },
-    "options_page": "options/options.html",
     "content_scripts": [
       {
-        "matches": ["https://*.instructure.com/*", "https://hcpss.instructure.com/*"],
+        "matches": ["https://*.instructure.com/*", "https://hcpss.instructure.com/*", "https://hcpss.beta.instructure.com/*", "https://hcpss.test.instructure.com/*"],
         "js": ["thirdParty/jquery-3.6.0.js", "content-script.js"]
       }
     ],
