@@ -317,10 +317,11 @@ function setBetterTODO() {
                 }
 
                 let todoItem = `
-                <li class="fOyUs_bGBk jpyTq_bGBk jpyTq_ycrn" style="padding: 0px; max-width: 100%;" id="todoItem${i}">
+                <li dir="ltr" class="css-1onamjj-view-listItem" id="todoItem${i}">
                     <div class="ToDoSidebarItem">
-                    <i class="dUOHu_bGBk dUOHu_drOs dUOHu_eXrk cGqzL_bGBk cGqzL_owrh ToDoSidebarItem__Icon icon-${type}">
+                    <i class="css-1uh2md0-inlineSVG-svgIcon ToDoSidebarItem__Icon icon-${type}">
                         </i>
+
                     <!--<svg label="Assignment" name="IconAssignment" viewBox="0 0 1920 1920" rotate="0"
                             width="1em" height="1em" aria-hidden="true" role="presentation" focusable="false"
                             class="dUOHu_bGBk dUOHu_drOs dUOHu_eXrk cGqzL_bGBk cGqzL_owrh ToDoSidebarItem__Icon"
@@ -331,65 +332,75 @@ function setBetterTODO() {
                                     fill-rule="evenodd" stroke="none" stroke-width="1"></path>
                             </g>
                         </svg> -->
-                        <div class="ToDoSidebarItem__Info">
-                            <div class="ToDoSidebarItem__Title"><a href="${data.assignment.html_url}"
-                                    class="fOyUs_bGBk fbyHH_bGBk fbyHH_vIby"><span wrap="normal" letter-spacing="normal"
-                                        class="enRcg_bGBk enRcg_doqw enRcg_fNIu enRcg_eQnG">${data.assignment.name} </span></a></div><span
-                                color="secondary" wrap="normal" letter-spacing="normal"
-                                class="enRcg_bGBk enRcg_doqw enRcg_bdMA enRcg_fNIu enRcg_eQnG enRcg_bLsb">${data.context_name}</span>
-                            <ul class="fOyUs_bGBk fOyUs_UeJS" style="margin: 0px; padding: 0px;">
-                                <li class="fOyUs_bGBk fOyUs_cuDs ctrLD_bGBk ctrLD_doqw ctrLD_dnHs"
-                                    style="padding: 0px; max-width: 100%;">${data.assignment.points_possible} points<span class="ctrLD_eLRq" aria-hidden="true"></span>
-                                </li>
-                                <li class="fOyUs_bGBk fOyUs_cuDs ctrLD_bGBk ctrLD_doqw ctrLD_dnHs"
-                                    style="padding: 0px; max-width: 100%;">${new Date(data.assignment.due_at).toLocaleDateString("en-US", {
-                    month: 'short', day: 'numeric', hour: 'numeric',
-                    minute: 'numeric'
-                }).replace(',', ' at').replace(new
-                    Date(data.assignment.due_at).toLocaleDateString("en-US", {
-                        month:
-                            'short', day: 'numeric', hour: 'numeric',
-                        minute: 'numeric'
-                    }).slice(-3), new
-                        Date(data.assignment.due_at).toLocaleDateString("en-US", {
-                            month:
-                                'short', day: 'numeric', hour: 'numeric',
-                            minute: 'numeric'
-                        }).slice(-2).toLowerCase()).replace(new Date(data.assignment.due_at).toLocaleDateString("en-US", {
-                            month: 'short', day: 'numeric', hour: 'numeric',
-                            minute: 'numeric'
-                        }).split(new Date(data.assignment.due_at).toLocaleDateString("en-US", {
-                            month: 'short', day: 'numeric', hour: 'numeric',
-                            minute: 'numeric'
-                        }).split(':', 3)[0])[1].substring(0, 3) == ':00' ? new Date(data.assignment.due_at).toLocaleDateString("en-US", {
-                            month: 'short', day: 'numeric', hour: 'numeric',
-                            minute: 'numeric'
-                        }).split(new Date(data.assignment.due_at).toLocaleDateString("en-US", {
-                            month: 'short', day: 'numeric', hour: 'numeric',
-                            minute: 'numeric'
-                        }).split(':', 3)[0])[1].substring(0, 3) : '', '')}<span class="ctrLD_eLRq"
-                                        aria-hidden="true"></span></li>
-                            </ul>
+
+
+                    <div class="ToDoSidebarItem__Info">
+                        <div class="ToDoSidebarItem__Title">
+                            <a dir="ltr" aria-label="Assignment, Fiscal Federalism" href="${data.assignment.html_url}" class="css-6t42ud-view-link">
+                                <span wrap="normal" letter-spacing="normal" class="css-10am28f-text">${data.assignment.name} 
+                                </span>
+                            </a>
                         </div>
-                        <div class="ToDoSidebarItem__Close"><span class="ejhDx_bGBk ejhDx_doBn ejhDx_coHh"><button id="todoItem${i}-btn" cursor="pointer"
-                                    type="button" tabindex="0"
-                                    class="fOyUs_bGBk fOyUs_fKyb fOyUs_cuDs fOyUs_cBHs fOyUs_eWbJ fOyUs_fmDy fOyUs_eeJl fOyUs_cBtr fOyUs_fuTR fOyUs_cnfU fQfxa_bGBk"
-                                    style="margin: 0px; padding: 0px; border-radius: 0.25rem; border-width: 0px; width: auto; cursor: pointer;"><span
-                                        class="fQfxa_caGd fQfxa_VCXp fQfxa_buuG fQfxa_EMjX fQfxa_bCUx fQfxa_bVmg fQfxa_bIHL"><span
-                                            direction="row" wrap="no-wrap"
-                                            class="fOyUs_bGBk fOyUs_desw bDzpk_bGBk bDzpk_eRIA bDzpk_fZWR bDzpk_qOas"
-                                            style="width: 100%; height: 100%;"><span class="fOyUs_bGBk dJCgj_bGBk"><span
-                                                    class="fQfxa_eoCh"><svg name="IconX" viewBox="0 0 1920 1920" rotate="0" width="1em"
-                                                        height="1em" aria-hidden="true" role="presentation" focusable="false"
-                                                        class="dUOHu_bGBk dUOHu_drOs dUOHu_eXrk cGqzL_bGBk"
-                                                        style="width: 1em; height: 1em;">
-                                                        <g role="presentation">
-                                                            <path
-                                                                d="M797.319865 985.881673L344.771525 1438.43001 533.333333 1626.99182 985.881673 1174.44348 1438.43001 1626.99182 1626.99182 1438.43001 1174.44348 985.881673 1626.99182 533.333333 1438.43001 344.771525 985.881673 797.319865 533.333333 344.771525 344.771525 533.333333z"
-                                                                fill-rule="nonzero" stroke="none" stroke-width="1"></path>
-                                                        </g>
-                                                    </svg></span><span class="ergWt_bGBk">Dismiss ${data.context_name}
-                                                </span></span></span></span></button></span></div>
+                        <span color="secondary" wrap="normal" letter-spacing="normal" class="css-4bnp8a-text">${data.context_name}
+                        </span>
+                        <ul dir="ltr" data-testid="ToDoSidebarItem__InformationRow" class="css-feuh9k-view--block">
+                            <li dir="ltr" class="css-14ttj25-view--inlineBlock-inlineListItem">${data.assignment.points_possible} points
+                                <span aria-hidden="true" class="css-1wgh970-inlineListItem__delimiter">
+                                </span>
+                            </li>
+                            <li dir="ltr" class="css-14ttj25-view--inlineBlock-inlineListItem">${new Date(data.assignment.due_at).toLocaleDateString("en-US", {
+                                month: 'short', day: 'numeric', hour: 'numeric',
+                                minute: 'numeric'
+                            }).replace(',', ' at').replace(new
+                                Date(data.assignment.due_at).toLocaleDateString("en-US", {
+                                    month:
+                                        'short', day: 'numeric', hour: 'numeric',
+                                    minute: 'numeric'
+                                }).slice(-3), new
+                                    Date(data.assignment.due_at).toLocaleDateString("en-US", {
+                                        month:
+                                            'short', day: 'numeric', hour: 'numeric',
+                                        minute: 'numeric'
+                                    }).slice(-2).toLowerCase()).replace(new Date(data.assignment.due_at).toLocaleDateString("en-US", {
+                                        month: 'short', day: 'numeric', hour: 'numeric',
+                                        minute: 'numeric'
+                                    }).split(new Date(data.assignment.due_at).toLocaleDateString("en-US", {
+                                        month: 'short', day: 'numeric', hour: 'numeric',
+                                        minute: 'numeric'
+                                    }).split(':', 3)[0])[1].substring(0, 3) == ':00' ? new Date(data.assignment.due_at).toLocaleDateString("en-US", {
+                                        month: 'short', day: 'numeric', hour: 'numeric',
+                                        minute: 'numeric'
+                                    }).split(new Date(data.assignment.due_at).toLocaleDateString("en-US", {
+                                        month: 'short', day: 'numeric', hour: 'numeric',
+                                        minute: 'numeric'
+                                    }).split(':', 3)[0])[1].substring(0, 3) : '', '')}
+                                <span aria-hidden="true" class="css-1wgh970-inlineListItem__delimiter">
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="ToDoSidebarItem__Close">
+                        <span class="css-btw693-closeButton">
+                            <button dir="ltr" cursor="pointer" type="button" tabindex="0" class="css-f3koyy-view--inlineBlock-baseButton" id="todoItem${i}-btn">
+                                <span class="css-12w1q2i-baseButton__content">
+                                    <span class="css-qi8ml9-baseButton__childrenLayout">
+                                        <span class="css-5udsuu-baseButton__iconOnly">
+                                            <span class="css-31gkb3-baseButton__iconSVG">
+                                                <svg name="IconX" viewBox="0 0 1920 1920" rotate="0" style="width: 1em; height: 1em;" width="1em" height="1em" aria-hidden="true" role="presentation" focusable="false" class="css-1uh2md0-inlineSVG-svgIcon">
+                                                    <g role="presentation">
+                                                        <path d="M797.32 985.882 344.772 1438.43l188.561 188.562 452.549-452.549 452.548 452.549 188.562-188.562-452.549-452.548 452.549-452.549-188.562-188.561L985.882 797.32 533.333 344.772 344.772 533.333z">
+                                                        </path>
+                                                    </g>
+                                                </svg>
+                                            </span>
+                                            <span class="css-1sr5vj2-screenReaderContent">Dismiss ${data.context_name}
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </button>
+                        </span>
                     </div>
                 </li>
                 `
@@ -458,6 +469,7 @@ function setBetterTODO() {
                 for (var i = 0; i < listItem.length; i++) {
                     listContainer.append(listItem[i]);
                 }
+                console.log(listContainer);
                 document.querySelector("div[data-testid='ToDoSidebar']").appendChild(listContainer);
 
             })
@@ -466,12 +478,12 @@ function setBetterTODO() {
                 if (todoButton.value == 'true') {
                     document.getElementById('planner-todosidebar-item-list').style.display = "none";
                     listContainer.style.display = "block";
-                    document.getElementsByClassName('fOyUs_bGBk fOyUs_ImeN')[0].style.display = 'none';
+                    document.getElementsByClassName('css-ev0s2h-view')[0].style.display = 'none';
                 }
                 if (todoButton.value == 'false') {
                     document.getElementById('planner-todosidebar-item-list').style.display = "block";
                     listContainer.style.display = "none";
-                    document.getElementsByClassName('fOyUs_bGBk fOyUs_ImeN')[0].style.display = 'block';
+                    document.getElementsByClassName('css-ev0s2h-view')[0].style.display = 'block';
                 }
             }
 
