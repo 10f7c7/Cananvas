@@ -15,7 +15,7 @@
     }
     console.log('received user data', response);
 }); */
-chrome.storage.sync.get(['grdTogl'], function (result) {
+chrome.storage.sync.get(['grdTogl'], function(result) {
     if (result.grdTogl == true) {
         setGrade();
     }
@@ -25,40 +25,40 @@ chrome.storage.sync.get(['grdTogl'], function (result) {
 //         setTabs();
 //     }
 // });
-chrome.storage.sync.get(['asgmtBckBtnTogl'], function (result) {
+chrome.storage.sync.get(['asgmtBckBtnTogl'], function(result) {
     if (result.asgmtBckBtnTogl == true) {
         setAsgmtBckBtn();
     }
 });
 
 
-chrome.storage.sync.get(['betterTODOTogl'], function (result) {
+chrome.storage.sync.get(['betterTODOTogl'], function(result) {
     if (result.betterTODOTogl == true) {
         setBetterTODO();
     }
 });
 
-if (document.getElementById("section-tabs-header-subtitle")) document.getElementById("section-tabs-header-subtitle").innerText += '\n'+ document.getElementById("breadcrumbs").children[0].children[1].children[0].children[0].innerText;
+if (document.getElementById("section-tabs-header-subtitle")) document.getElementById("section-tabs-header-subtitle").innerText += '\n' + document.getElementById("breadcrumbs").children[0].children[1].children[0].children[0].innerText;
 document.getElementById("global_nav_conversations_link").children[1].innerHTML = "Email";
 var id = window.location.href;
 
 if (id == "https://hcpss.instructure.com" || id == "https://hcpss.instructure.com/" || id == "https://hcpss.instructure.com/#homeroom" || id == "https://hcpss.instructure.com/#dashboard-activity") {
     var actualCode =
-    'window.prefetched_xhrs["/api/v1/dashboard/dashboard_cards"] = new Promise((resolve, reject) =>  {fetch ("/api/v1/dashboard/dashboard_cards", {"credentials":"same-origin","headers":{"Accept":"application/json+canvas-string-ids, application/json","X-Requested-With":"XMLHttpRequest"}}).then(res => res.json().then(data => ({headers: [...res.headers], body: data}))).then(json => {'+
-        'json.body.forEach(element => {'+
-            'var obj = {css_class: "assignments", icon: "icon-module", path: `${element.href}/modules`, label: "Modules"};'+
-            'if (element.links.length >= 4)  {'+
-                'element.links[3] = obj;'+
-            '} else {'+
-                'element.links.push(obj);'+
-            '}'+
-        '});'+
-        'const blob = new Blob([JSON.stringify(json.body, null, 2)], {'+
-            'type: "application/json",'+
-          '});'+
-        'const options = {status: 200, headers: new Headers(json.headers)};'+
-        'resolve(new Response(blob, options));'+
-    '})});';
+        'window.prefetched_xhrs["/api/v1/dashboard/dashboard_cards"] = new Promise((resolve, reject) =>  {fetch ("/api/v1/dashboard/dashboard_cards", {"credentials":"same-origin","headers":{"Accept":"application/json+canvas-string-ids, application/json","X-Requested-With":"XMLHttpRequest"}}).then(res => res.json().then(data => ({headers: [...res.headers], body: data}))).then(json => {' +
+        'json.body.forEach(element => {' +
+        'var obj = {css_class: "assignments", icon: "icon-module", path: `${element.href}/modules`, label: "Modules"};' +
+        'if (element.links.length >= 4)  {' +
+        'element.links[3] = obj;' +
+        '} else {' +
+        'element.links.push(obj);' +
+        '}' +
+        '});' +
+        'const blob = new Blob([JSON.stringify(json.body, null, 2)], {' +
+        'type: "application/json",' +
+        '});' +
+        'const options = {status: 200, headers: new Headers(json.headers)};' +
+        'resolve(new Response(blob, options));' +
+        '})});';
 
     document.documentElement.setAttribute('onreset', actualCode);
     document.documentElement.dispatchEvent(new CustomEvent('reset'));
@@ -143,11 +143,11 @@ function setGrade() {
                 div.innerText = "N/A";
                 div.setAttribute("onclick", "window.open('https://hcpss.instructure.com" + crsnmstr + "/grades'); event.stopPropagation()");
                 courseCard[i].children[0].insertBefore(div, courseCard[i].children[0].children[0]);
-                $.ajax({ url: "https://hcpss.instructure.com/api/v1" + crsnmstr + "/enrollments?user_id=self", method: "GET", async: false }).done(function (response) {
+                $.ajax({ url: "https://hcpss.instructure.com/api/v1" + crsnmstr + "/enrollments?user_id=self", method: "GET", async: false }).done(function(response) {
                     var str = JSON.stringify(response);
                     var grd = JSON.parse(str);
                     var currentQuart;
-                    $.ajax({ url: `https://hcpss.instructure.com/api/v1${crsnmstr}/grading_periods`, method: "GET", async: false }).done(function (response) {
+                    $.ajax({ url: `https://hcpss.instructure.com/api/v1${crsnmstr}/grading_periods`, method: "GET", async: false }).done(function(response) {
                         var quart = response.grading_periods;
                         // console.log("quart" + quart);
 
@@ -182,13 +182,13 @@ function setGrade() {
                             // console.log("current" + currentDate);
                             if (valid == true) {
                                 currentQuart = quart[quarter];
-                                // console.log("currentQuart"+currentQuart);
+                                // console.log("currentQuart" + currentQuart.id);
                             }
 
                         }
                         // console.log("format" + timeFormated);
                     });
-                    $.ajax({ url: `https://hcpss.instructure.com/grades_for_student?grading_period_id=${currentQuart.id}&enrollment_id=312300000${grd[0].id}`, method: "GET", async: false }).done(function (response1) {
+                    $.ajax({ url: `https://hcpss.instructure.com/grades_for_student?grading_period_id=${currentQuart.id}&enrollment_id=312300000${grd[0].id}`, method: "GET", async: false }).done(function(response1) {
                         var str1 = JSON.stringify(response1);
                         var grd1 = JSON.parse(str1);
                         var grd2 = grd1.grade + "%"
@@ -210,12 +210,13 @@ function setGrade() {
                     in_dom = true;
                 } else if (in_dom) {
                     in_dom = false;
+                    console.log("trying to readd");
                     addGrade();
                     console.log("element removed");
                 }
 
             });
-            observere.observe(document.body, {childList: true, subtree: true});
+            observere.observe(document.body, { childList: true, subtree: true });
 
 
 
@@ -278,40 +279,39 @@ function setBetterTODO() {
             function createToDoItem(data, i) {
 
                 let type = 'assignment';
-                if (data.assignment.submission_types.includes('online_quiz'))  {
+                if (data.assignment.submission_types.includes('online_quiz')) {
                     type = 'quiz';
                 }
-                if (data.assignment.submission_types.includes('external_tool'))  {
+                if (data.assignment.submission_types.includes('external_tool')) {
                     type = 'lti';
                 }
 
                 let todoItem = `
-                <li class="fOyUs_bGBk jpyTq_bGBk jpyTq_ycrn" style="padding: 0px; max-width: 100%;" id="todoItem${i}">
+                    <li dir="ltr" class="css-1onamjj-view-listItem" id="todoItem${i}">
                     <div class="ToDoSidebarItem">
-                    <i class="dUOHu_bGBk dUOHu_drOs dUOHu_eXrk cGqzL_bGBk cGqzL_owrh ToDoSidebarItem__Icon icon-${type}">
-                        </i>
-                    <!--<svg label="Assignment" name="IconAssignment" viewBox="0 0 1920 1920" rotate="0"
-                            width="1em" height="1em" aria-hidden="true" role="presentation" focusable="false"
-                            class="dUOHu_bGBk dUOHu_drOs dUOHu_eXrk cGqzL_bGBk cGqzL_owrh ToDoSidebarItem__Icon"
-                            style="width: 1em; height: 1em;">
-                            <g role="presentation">
-                                <path
-                                    d="M1468.2137,0 L1468.2137,564.697578 L1355.27419,564.697578 L1355.27419,112.939516 L112.939516,112.939516 L112.939516,1807.03225 L1355.27419,1807.03225 L1355.27419,1581.15322 L1468.2137,1581.15322 L1468.2137,1919.97177 L2.5243549e-29,1919.97177 L2.5243549e-29,0 L1468.2137,0 Z M1597.64239,581.310981 C1619.77853,559.174836 1655.46742,559.174836 1677.60356,581.310981 L1677.60356,581.310981 L1903.4826,807.190012 C1925.5058,829.213217 1925.5058,864.902104 1903.4826,887.038249 L1903.4826,887.038249 L1225.8455,1564.67534 C1215.22919,1575.17872 1200.88587,1581.16451 1185.86491,1581.16451 L1185.86491,1581.16451 L959.985883,1581.16451 C928.814576,1581.16451 903.516125,1555.86606 903.516125,1524.69475 L903.516125,1524.69475 L903.516125,1298.81572 C903.516125,1283.79477 909.501919,1269.45145 920.005294,1258.94807 L920.005294,1258.94807 Z M1442.35055,896.29929 L1016.45564,1322.1942 L1016.45564,1468.225 L1162.48643,1468.225 L1588.38135,1042.33008 L1442.35055,896.29929 Z M677.637094,1242.34597 L677.637094,1355.28548 L338.818547,1355.28548 L338.818547,1242.34597 L677.637094,1242.34597 Z M903.516125,1016.46693 L903.516125,1129.40645 L338.818547,1129.40645 L338.818547,1016.46693 L903.516125,1016.46693 Z M1637.62298,701.026867 L1522.19879,816.451052 L1668.22958,962.481846 L1783.65377,847.057661 L1637.62298,701.026867 Z M1129.39516,338.829841 L1129.39516,790.587903 L338.818547,790.587903 L338.818547,338.829841 L1129.39516,338.829841 Z M1016.45564,451.769356 L451.758062,451.769356 L451.758062,677.648388 L1016.45564,677.648388 L1016.45564,451.769356 Z"
-                                    fill-rule="evenodd" stroke="none" stroke-width="1"></path>
-                            </g>
-                        </svg> -->
-                        <div class="ToDoSidebarItem__Info">
-                            <div class="ToDoSidebarItem__Title"><a href="${data.assignment.html_url}"
-                                    class="fOyUs_bGBk fbyHH_bGBk fbyHH_vIby"><span wrap="normal" letter-spacing="normal"
-                                        class="enRcg_bGBk enRcg_doqw enRcg_fNIu enRcg_eQnG">${data.assignment.name} </span></a></div><span
-                                color="secondary" wrap="normal" letter-spacing="normal"
-                                class="enRcg_bGBk enRcg_doqw enRcg_bdMA enRcg_fNIu enRcg_eQnG enRcg_bLsb">${data.context_name}</span>
-                            <ul class="fOyUs_bGBk fOyUs_UeJS" style="margin: 0px; padding: 0px;">
-                                <li class="fOyUs_bGBk fOyUs_cuDs ctrLD_bGBk ctrLD_doqw ctrLD_dnHs"
-                                    style="padding: 0px; max-width: 100%;">${data.assignment.points_possible} points<span class="ctrLD_eLRq" aria-hidden="true"></span>
-                                </li>
-                                <li class="fOyUs_bGBk fOyUs_cuDs ctrLD_bGBk ctrLD_doqw ctrLD_dnHs"
-                                    style="padding: 0px; max-width: 100%;">${new Date(data.assignment.due_at).toLocaleDateString("en-US", {
+                    <i class="css-1xnn9jb-inlineSVG-svgIcon ToDoSidebarItem__Icon icon-${type}">
+                    </i>
+                    <!--<svg label="${type[0].toUpperCase()}${type.slice(1, type.length)}" name="Icon${type[0].toUpperCase()}${type.slice(1, type.length)}" viewBox="0 0 1920 1920" rotate="0" width="1em" height="1em" aria-hidden="true" role="presentation" focusable="false" class="ToDoSidebarItem__Icon css-1xnn9jb-inlineSVG-svgIcon" style="width: 1em; height: 1em;">
+                    <g role="presentation">
+                    <path d="M1587.162 31.278c11.52-23.491 37.27-35.689 63.473-29.816 25.525 6.099 43.483 28.8 43.483 55.002V570.46C1822.87 596.662 1920 710.733 1920 847.053c0 136.32-97.13 250.503-225.882 276.705v513.883c0 26.202-17.958 49.016-43.483 55.002a57.279 57.279 0 0 1-12.988 1.468c-21.12 0-40.772-11.745-50.485-31.171C1379.238 1247.203 964.18 1242.347 960 1242.347H564.706v564.706h87.755c-11.859-90.127-17.506-247.003 63.473-350.683 52.405-67.087 129.657-101.082 229.948-101.082v112.941c-64.49 0-110.57 18.861-140.837 57.487-68.781 87.868-45.064 263.83-30.269 324.254 4.18 16.828.34 34.673-10.277 48.34-10.73 13.665-27.219 21.684-44.499 21.684H508.235c-31.171 0-56.47-25.186-56.47-56.47v-621.177h-56.47c-155.747 0-282.354-126.607-282.354-282.353v-56.47h-56.47C25.299 903.523 0 878.336 0 847.052c0-31.172 25.299-56.471 56.47-56.471h56.471v-56.47c0-155.634 126.607-282.354 282.353-282.354h564.593c16.941-.112 420.48-7.002 627.275-420.48Zm-5.986 218.429c-194.71 242.371-452.216 298.164-564.705 311.04v572.724c112.489 12.876 369.995 68.556 564.705 311.04ZM903.53 564.7H395.294c-93.402 0-169.412 76.01-169.412 169.411v225.883c0 93.402 76.01 169.412 169.412 169.412H903.53V564.7Zm790.589 123.444v317.93c65.618-23.379 112.94-85.497 112.94-159.021 0-73.525-47.322-135.53-112.94-158.909Z" fill-rule="evenodd">
+                    </path>
+                    </g>
+                    </svg>-->
+                    <div class="ToDoSidebarItem__Info" data-testid="todo-sidebar-item-info">
+                    <div class="ToDoSidebarItem__Title" data-testid="todo-sidebar-item-title">
+                    <a dir="ltr" aria-label="${data.assignment.html_url}" href="/courses/32925/discussion_topics/2399604" class="css-6t42ud-view-link">
+                    <span wrap="normal" letter-spacing="normal" class="css-10am28f-text">
+                    ${data.assignment.name}
+                    </span>
+                    </a>
+                    </div>
+                    <span color="secondary" wrap="normal" letter-spacing="normal" class="css-4bnp8a-text">
+                    ${data.context_name}
+                    </span>
+                    <ul dir="ltr" data-testid="ToDoSidebarItem__InformationRow" class="css-feuh9k-view--block">
+                    <li dir="ltr" class="css-14ttj25-view--inlineBlock-inlineListItem">${data.assignment.points_possible} points<span aria-hidden="true" class="css-1wgh970-inlineListItem__delimiter"></span></li>
+                    <li dir="ltr" class="css-14ttj25-view--inlineBlock-inlineListItem">
+                    ${new Date(data.assignment.due_at).toLocaleDateString("en-US", {
                     month: 'short', day: 'numeric', hour: 'numeric',
                     minute: 'numeric'
                 }).replace(',', ' at').replace(new
@@ -336,32 +336,36 @@ function setBetterTODO() {
                         }).split(new Date(data.assignment.due_at).toLocaleDateString("en-US", {
                             month: 'short', day: 'numeric', hour: 'numeric',
                             minute: 'numeric'
-                        }).split(':', 3)[0])[1].substring(0, 3) : '', '')}<span class="ctrLD_eLRq"
-                                        aria-hidden="true"></span></li>
-                            </ul>
-                        </div>
-                        <div class="ToDoSidebarItem__Close"><span class="ejhDx_bGBk ejhDx_doBn ejhDx_coHh"><button id="todoItem${i}-btn" cursor="pointer"
-                                    type="button" tabindex="0"
-                                    class="fOyUs_bGBk fOyUs_fKyb fOyUs_cuDs fOyUs_cBHs fOyUs_eWbJ fOyUs_fmDy fOyUs_eeJl fOyUs_cBtr fOyUs_fuTR fOyUs_cnfU fQfxa_bGBk"
-                                    style="margin: 0px; padding: 0px; border-radius: 0.25rem; border-width: 0px; width: auto; cursor: pointer;"><span
-                                        class="fQfxa_caGd fQfxa_VCXp fQfxa_buuG fQfxa_EMjX fQfxa_bCUx fQfxa_bVmg fQfxa_bIHL"><span
-                                            direction="row" wrap="no-wrap"
-                                            class="fOyUs_bGBk fOyUs_desw bDzpk_bGBk bDzpk_eRIA bDzpk_fZWR bDzpk_qOas"
-                                            style="width: 100%; height: 100%;"><span class="fOyUs_bGBk dJCgj_bGBk"><span
-                                                    class="fQfxa_eoCh"><svg name="IconX" viewBox="0 0 1920 1920" rotate="0" width="1em"
-                                                        height="1em" aria-hidden="true" role="presentation" focusable="false"
-                                                        class="dUOHu_bGBk dUOHu_drOs dUOHu_eXrk cGqzL_bGBk"
-                                                        style="width: 1em; height: 1em;">
-                                                        <g role="presentation">
-                                                            <path
-                                                                d="M797.319865 985.881673L344.771525 1438.43001 533.333333 1626.99182 985.881673 1174.44348 1438.43001 1626.99182 1626.99182 1438.43001 1174.44348 985.881673 1626.99182 533.333333 1438.43001 344.771525 985.881673 797.319865 533.333333 344.771525 344.771525 533.333333z"
-                                                                fill-rule="nonzero" stroke="none" stroke-width="1"></path>
-                                                        </g>
-                                                    </svg></span><span class="ergWt_bGBk">Dismiss ${data.context_name}
-                                                </span></span></span></span></button></span></div>
+                        }).split(':', 3)[0])[1].substring(0, 3) : '', '')}
+                    <span aria-hidden="true" class="css-1wgh970-inlineListItem__delimiter">
+                    </span>
+                    </li>
+                    </ul>
                     </div>
-                </li>
-                `
+                    <div class="ToDoSidebarItem__Close" data-testid="todo-sidebar-item-close">
+                    <span data-testid="todo-sidebar-item-close-button" class="css-btw693-closeButton">
+                    <button id="todoItem${i}-btn" dir="ltr" cursor="pointer" type="button" tabindex="0" class="css-1j7nn9n-view--inlineBlock-baseButton">
+                    <span class="css-12w1q2i-baseButton__content">
+                    <span class="css-qi8ml9-baseButton__childrenLayout">
+                    <span class="css-5udsuu-baseButton__iconOnly">
+                    <span class="css-31gkb3-baseButton__iconSVG">
+                    <svg name="IconX" viewBox="0 0 1920 1920" rotate="0" width="1em" height="1em" aria-hidden="true" role="presentation" focusable="false" class="css-1uh2md0-inlineSVG-svgIcon" style="width: 1em; height: 1em;"><g role="presentation"><path d="M797.32 985.882 344.772 1438.43l188.561 188.562 452.549-452.549 452.548 452.549 188.562-188.562-452.549-452.548 452.549-452.549-188.562-188.561L985.882 797.32 533.333 344.772 344.772 533.333z">
+                    </path>
+                    </g>
+                    </svg>
+                    </span>
+                    <span class="css-1sr5vj2-screenReaderContent">
+                    Dismiss ${data.context_name}
+                    </span>
+                    </span>
+                    </span>
+                    </span>
+                    </button>
+                    </span>
+                    </div>
+                    </div>
+                    </li>
+                    `;
 
                 var wrapper = document.createElement('div');
                 wrapper.innerHTML = todoItem;
@@ -375,7 +379,7 @@ function setBetterTODO() {
                     // const xhttp = new XMLHttpRequest();
                     // xhttp.open("DELETE", data.ignore);
                     // xhttp.send();
-                    $.ajax({url: `${data.ignore}`, type: "DELETE", headers: {'X-CSRF-Token': `${decodeURIComponent((document.cookie.match('(^|;) *_csrf_token=([^;]*)') || '')[2])}`}}).fail(function(err) {
+                    $.ajax({ url: `${data.ignore}`, type: "DELETE", headers: { 'X-CSRF-Token': `${decodeURIComponent((document.cookie.match('(^|;) *_csrf_token=([^;]*)') || '')[2])}` } }).fail(function(err) {
                         console.log(err);
                     });
                     document.querySelector(`#todoItem${i}`).remove();
@@ -389,8 +393,8 @@ function setBetterTODO() {
             var data = [];
 
             $.ajax({ url: 'https://hcpss.instructure.com/api/v1/users/self/todo' }).done((response) => {
-                data = response.sort((a, b) => {return new Date(a.assignment.due_at) - new Date(b.assignment.due_at)});
-                listContainer.setAttribute('class', 'fOyUs_bGBk fOyUs_UeJS fClCc_bGBk fClCc_fLbg');
+                data = response.sort((a, b) => { return new Date(a.assignment.due_at) - new Date(b.assignment.due_at) });
+                listContainer.setAttribute('class', 'css-vftc6n-view--block-list');
                 listContainer.setAttribute('display', 'none');
 
                 for (var j = 0; j < data.length; j++) {
@@ -442,12 +446,12 @@ function setBetterTODO() {
                 if (todoButton.value == 'true') {
                     document.getElementById('planner-todosidebar-item-list').style.display = "none";
                     listContainer.style.display = "block";
-                    document.getElementsByClassName('fOyUs_bGBk fOyUs_ImeN')[0].style.display = 'none';
+                    document.getElementsByClassName('css-ev0s2h-view')[0].style.display = 'none';
                 }
                 if (todoButton.value == 'false') {
                     document.getElementById('planner-todosidebar-item-list').style.display = "block";
                     listContainer.style.display = "none";
-                    document.getElementsByClassName('fOyUs_bGBk fOyUs_ImeN')[0].style.display = 'block';
+                    document.getElementsByClassName('css-ev0s2h-view')[0].style.display = 'block';
                 }
             }
 
